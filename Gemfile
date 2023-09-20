@@ -79,3 +79,6 @@ group :test do
 
 
 end
+
+#css template
+gem 'bootstrap-sass'

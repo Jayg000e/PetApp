@@ -1,0 +1,20 @@
+<!-- app/views/pets/index.html.erb -->
+
+<div class="container my-4">
+  <h1 class="text-center mb-4">List of Pets</h1>
+
+  <div class="row">
+    <% @pets.each do |pet| %>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title text-primary"><%= pet.name %></h5>
+            <p class="card-text"><strong>Type:</strong> <%= pet.pet_type %></p>
+            <p class="card-text"><strong>Birthdate:</strong> <%= pet.birthdate %></p>
+            <p class="card-text"><strong>Breed:</strong> <%= pet.breed %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
