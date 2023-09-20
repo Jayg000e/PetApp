@@ -1,5 +1,5 @@
 # PetApp
-Woring in progress
+Working in progress.
 
 # Todo
 
