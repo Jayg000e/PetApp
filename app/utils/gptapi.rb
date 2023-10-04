@@ -9,7 +9,7 @@ client = OpenAI::Client.new
 
 conversation = [
   {"role": "system", "content": "Return the answer as a JSON object."},
-  {"role": "user", "content": "Ask me problems of Golden Retriever. Return an array of questions in a JSON object."},
+  {"role": "user", "content": "Ask me problems of Golden Retriever and provide corresponding answer. Return an array of questions and an array of answers in a JSON object."},
 ]
 response = client.chat(
   parameters: {

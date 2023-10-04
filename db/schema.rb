@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_20_160226) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_175331) do
+  create_table "activities", force: :cascade do |t|
+    t.string "content"
+    t.integer "pet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_activities_on_pet_id"
+  end
+
   create_table "pets", force: :cascade do |t|
     t.string "name"
     t.string "pet_type"
@@ -18,6 +26,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_160226) do
     t.string "breed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "onsale"
+    t.float "price"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "activities", "pets"
+  add_foreign_key "pets", "users"
 end
