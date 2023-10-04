@@ -23,9 +23,6 @@ class PetsController < ApplicationController
     end
   end
 
-  def new
-    @pet = Pet.new
-  end
 
   # POST /pets
   def create
@@ -35,23 +32,6 @@ class PetsController < ApplicationController
     else
       render json: { error: pet.errors.full_messages.join(', ') }, status: :unprocessable_entity
     end
-  end
-
-
-  def edit
-  end
-
-  def update
-    if @pet.update(pet_params)
-      redirect_to @pet, notice: 'Pet was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  def destroy
-    @pet.destroy
-    redirect_to pets_url, notice: 'Pet was successfully deleted.'
   end
 
   private
