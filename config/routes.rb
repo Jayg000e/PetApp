@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   # root "articles#index"
   # get '/pets', to: 'pets#index'
   resources :pets
-
+  get '/example_action', to: 'controller_name#example_action'
+  get '/pets/user/:userid', to: 'pets#by_user'
 end

@@ -86,3 +86,5 @@ gem 'bootstrap-sass'
 gem "ruby-openai"
 
 gem 'dotenv'
+
+gem 'jquery-rails'
