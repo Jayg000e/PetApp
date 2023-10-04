@@ -82,3 +82,9 @@ end
 
 #css template
 gem 'bootstrap-sass'
+# gpt
+gem "ruby-openai"
+
+gem 'dotenv'
+
+gem 'jquery-rails'

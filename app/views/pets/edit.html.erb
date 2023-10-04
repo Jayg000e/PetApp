@@ -1,0 +1,11 @@
+<!-- app/views/pets/edit.html.erb -->
+<h1>Edit Pet</h1>
+<%= render 'form' %>
+<%= link_to 'Show', @pet %> |
+<%= link_to 'Back', pets_path %>
+
+<!-- Button to send request to GPT -->
+<button id="gpt-request">Get GPT Response</button>
+
+<!-- Display area for GPT response -->
+<div id="gpt-response"></div>
