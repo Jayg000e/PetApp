@@ -11,7 +11,8 @@ Rails.application.routes.draw do
 
   resources :pets
   resources :users
+  resources :activities
   # get '/example_action', to: 'controller_name#example_action'
-  get '/pets/user/:userid', to: 'pets#by_user'
-  
+  get '/pets/user/:userid', to: 'pets#by_user' 
+  get '/activities/pet/:petid', to: 'activities#by_pet'
 end
