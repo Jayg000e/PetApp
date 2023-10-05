@@ -1,0 +1,19 @@
+<title>AJAX Example</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+    url: 'http://localhost:3000/pets', // Example URL
+    method: 'GET',
+    dataType: 'json', // Expect JSON response
+    success: function(data) {
+        // Handle the JSON data here and render it on the page
+        $('#my-container').html('<p>' + JSON.stringify(data) + '</p>');
+    },
+    error: function() {
+        console.error('Error fetching data.');
+    }
+    });
+});
+  </script>
+  <div id="my-container"></div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <div id="my-container"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var petid = <%= @petid %>;
+            $.ajax({
+                url: 'http://localhost:3000/pets/' + petid, // Example URL
+                method: 'GET',
+                dataType: 'json', // Expect JSON response
+                success: function(data) {
+                    // Handle the JSON data here and render it on the page with Bootstrap styling
+                    var html = '<div class="card"><div class="card-body">';
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            html += '<p class="card-text"><strong>' + key + ':</strong> ' + data[key] + '</p>';
+                        }
+                    }
+                    html += '</div></div>';
+                    $('#my-container').html(html);
+                },
+                error: function() {
+                    console.error('Error fetching data.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
