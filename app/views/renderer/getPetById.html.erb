@@ -3,21 +3,34 @@
 <head>
     <title>AJAX Example</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%# <script>var exports = {};</script> %>
+    <%# <script src="https://cdn.jsdelivr.net/npm/openai@4.11.1/index.min.js"></script> %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container mt-4">
         <div id="my-container"></div>
     </div>
+    <button id="generateButton">Check how well you know your pet!</button>
+    <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
+    <div id="responseContainer">
+      <div id="questions"></div>
+      <button id="answerButton" style="display: none;">View the answers</button>
+      <div id="answers" style="display: none;"></div>
+    </div>
 
     <script>
+        var petData;
+        var petid = <%= @petid %>;
         $(document).ready(function() {
-            var petid = <%= @petid %>;
+            
+            
             $.ajax({
                 url: 'http://localhost:3000/pets/' + petid, // Example URL
                 method: 'GET',
                 dataType: 'json', // Expect JSON response
                 success: function(data) {
+                    petData=data
                     // Handle the JSON data here and render it on the page with Bootstrap styling
                     var html = '<div class="card"><div class="card-body">';
                     for (var key in data) {
@@ -32,6 +45,73 @@
                     console.error('Error fetching data.');
                 }
             });
+
+        
+            $('#generateButton').click(function() {
+                
+                $('#loadingMessage').show();
+                const apiKey = "";
+
+                // Define the API endpoint
+                const apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+                // Define consversation
+                const consversation = [
+                    {"role": "system", "content": "Return the answer as a JSON object."},
+                    {"role": "user", "content": `Ask me problems of ${petData.breed} and provide corresponding answer. Return an array of questions and an array of answers in a JSON object.`},
+                ]
+                // Data to send in the request
+                const requestData = {
+                    model: 'gpt-3.5-turbo',
+                    messages: consversation,
+                    temperature: 0.7
+                };
+
+                // Send the POST request to the OpenAI API
+                $.ajax({
+                    type: 'POST',
+                    url: apiUrl,
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                    },
+                    data: JSON.stringify(requestData),
+                    success: function(data) {
+                        $('#loadingMessage').hide();
+                        
+                        const responseContent = data.choices[0].message.content;
+                        // Update the responseContainer with the response
+                        // Parse the JSON response
+                        const jsonResponse = JSON.parse(responseContent);
+
+                        // Display each key separately
+                        const questionsDiv = $('#questions');
+                        const answersDiv = $('#answers');
+
+                        questionsDiv.empty(); // Clear any previous content
+                        answersDiv.empty(); // Clear any previous content
+
+                        jsonResponse.questions.forEach((question, index) => {
+                        const questionElement = $('<div>').text(`Question ${index + 1}: ${question}`);
+                        questionsDiv.append(questionElement);
+                        });
+
+                        jsonResponse.answers.forEach((answer, index) => {
+                        const answerElement = $('<div>').text(`Answer ${index + 1}: ${answer}`);
+                        answersDiv.append(answerElement);
+                        });
+                        $('#answerButton').show()
+                    },
+                    error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    }
+                });
+
+            });
+            $('#answerButton').click(function(){
+                $('#answers').show();
+            })
+
         });
     </script>
 </body>
