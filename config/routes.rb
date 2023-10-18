@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 
   resources :pets
+  resources :activities
+  resources :users
   get '/pets/user/:userid', to: 'pets#by_user'
 
   # frontend route

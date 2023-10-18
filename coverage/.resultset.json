@@ -1,0 +1,317 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/home/jayg/Documents/petApp/app/helpers/activities_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/helpers/pets_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/helpers/renderer_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/controllers/pets_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          2,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/models/pet.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/jayg/Documents/petApp/app/controllers/activities_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/home/jayg/Documents/petApp/app/controllers/controller_name.rb": {
+        "lines": [
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/jayg/Documents/petApp/app/controllers/renderer_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/jayg/Documents/petApp/app/controllers/users_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/jayg/Documents/petApp/app/models/activity.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/jayg/Documents/petApp/app/utils/gptapi.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1697639231
+  }
+}
