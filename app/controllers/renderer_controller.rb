@@ -6,4 +6,8 @@ class RendererController < ApplicationController
     @petid=params[:id]
     render 'getPetById'
   end
+  def getActivities
+    @petid=params[:petid]
+    render 'getActivities'
+  end
 end
