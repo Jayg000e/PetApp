@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get '/render/pets/:id', to: 'renderer#getPetById'
   get '/render/pets/:petid/activities', to: 'renderer#getActivities'
   get '/activities/pet/:petid', to: 'activities#by_pet'
+
+  post '/login', to: 'users#login'
 end
