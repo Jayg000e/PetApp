@@ -12,26 +12,6 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       render json: @user
     end
-<<<<<<< Updated upstream
-  
-    # create: 0.0.0.0:3000/users (post)
-    def new
-      @user = User.new
-    end
-
-    def create
-      @user = User.new(user_params)
-
-      if missing_user_info?(user_params)
-        flash.now[:error] = 'Please enter valid username and password.'
-        render 'new'
-      end
-
-      if User.find_by(username: user_params["username"])
-        flash.now[:error] = 'Please enter valid username and password.'
-        render 'new'
-      end
-=======
 
     # create: /users (post)
     def create
@@ -44,7 +24,6 @@ class UsersController < ApplicationController
       elsif User.find_by(username: user_params["username"])
         flash.now[:error] = "Username has already been taken"
         render json: { error: "Username has already been taken" }, status: :unprocessable_entity
->>>>>>> Stashed changes
 
       elsif user.save
         flash[:notice] = 'User Successfully Created!'
@@ -55,22 +34,6 @@ class UsersController < ApplicationController
     end
 
     # edit: 0.0.0.0:3000/users/:id (patch)
-<<<<<<< Updated upstream
-    def edit
-        @user = User.find(params[:id])
-    end
-
-    def update
-        @user = User.find(params[:id])
-        if @user.update(user_params)
-            redirect_to @user, notice: 'User Info was successfully updated.'
-        else
-            flash.now[:error] = 'User update failed.'
-            render 'edit'
-        end
-    end
-  
-=======
     def update
       @user = User.find(params[:id])
     
@@ -82,7 +45,6 @@ class UsersController < ApplicationController
       end
     end    
 
->>>>>>> Stashed changes
     # delete user: 0.0.0.0:3000/users/:id (delete)
     def destroy
         @user = User.find(params[:id])
@@ -90,10 +52,6 @@ class UsersController < ApplicationController
         redirect_to users_url, notice: 'User was successfully deleted.'
     end
 
-<<<<<<< Updated upstream
-  
-=======
->>>>>>> Stashed changes
     private
     def user_params
       params.require(:user).permit(:username, :password, :role)
@@ -104,8 +62,3 @@ class UsersController < ApplicationController
       user_params[:username].nil? or user_params[:username].blank? or user_params[:password].nil? or user_params[:password].blank?
     end
   end
-<<<<<<< Updated upstream
-  
-=======
-
->>>>>>> Stashed changes
