@@ -10,6 +10,7 @@ class PetsController < ApplicationController
     @pet = Pet.find(params[:id])
     render json: @pet
   end
+  
   def by_user
     # Retrieve pets belonging to the user with the provided :userid
     user_id = params[:userid]
