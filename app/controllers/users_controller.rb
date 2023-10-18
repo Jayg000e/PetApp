@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:new, :create, :edit, :update, :destroy, :login]
 
-    # display all users: /users (get)
+    # display all users: 0.0.0.0:3000/users (get)
     def index
       @users = User.all
       render json: @users
     end
 
-    # display single user: /users/id (get)
+    # display single user: 0.0.0.0:3000/users/id (get)
     def show
       @user = User.find(params[:id])
       render json: @user
@@ -36,14 +36,14 @@ class UsersController < ApplicationController
     # edit: 0.0.0.0:3000/users/:id (patch)
     def update
       @user = User.find(params[:id])
-    
+
       if @user.update(password: user_params[:password])
         flash[:notice] = 'Password was successfully updated'
         render json: { user: @user, message: 'Password was successfully updated' }, status: :ok
       else
         render json: { error: 'Password update failed' }, status: :unprocessable_entity
       end
-    end    
+    end
 
     # delete user: 0.0.0.0:3000/users/:id (delete)
     def destroy
