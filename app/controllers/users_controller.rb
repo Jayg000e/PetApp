@@ -13,44 +13,36 @@ class UsersController < ApplicationController
       render json: @user
     end
 
-    # create: 0.0.0.0:3000/users (post)
-    def new
-      @user = User.new
-    end
-
+    # create: /users (post)
     def create
-      @user = User.new(user_params)
+      user = User.new(user_params)
 
       if missing_user_info?(user_params)
         flash.now[:error] = 'Please enter valid username and password.'
-        render 'new'
-      end
+        render json: { error: 'Please enter valid username and password.' }, status: :unprocessable_entity
 
-      if User.find_by(username: user_params["username"])
-        flash.now[:error] = 'Please enter valid username and password.'
-        render 'new'
-      end
+      elsif User.find_by(username: user_params["username"])
+        flash.now[:error] = "Username has already been taken"
+        render json: { error: "Username has already been taken" }, status: :unprocessable_entity
 
-      if @user.save
-        redirect_to @user, notice: 'User creation success!'
+      elsif user.save
+        flash[:notice] = 'User Successfully Created!'
+        render json: { user: user, message: 'User Successfully Created!' }, status: :created
       else
-        render 'new'
+        render json: { error: user.errors.full_messages.join(', ') }, status: :unprocessable_entity
       end
     end
 
     # edit: 0.0.0.0:3000/users/:id (patch)
-    def edit
-        @user = User.find(params[:id])
-    end
-
     def update
-        @user = User.find(params[:id])
-        if @user.update(user_params)
-            redirect_to @user, notice: 'User Info was successfully updated.'
-        else
-            flash.now[:error] = 'User update failed.'
-            render 'edit'
-        end
+      @user = User.find(params[:id])
+
+      if @user.update(password: user_params[:password])
+        flash[:notice] = 'Password was successfully updated'
+        render json: { user: @user, message: 'Password was successfully updated' }, status: :ok
+      else
+        render json: { error: 'Password update failed' }, status: :unprocessable_entity
+      end
     end
 
     # delete user: 0.0.0.0:3000/users/:id (delete)
@@ -59,7 +51,6 @@ class UsersController < ApplicationController
         @user.destroy
         redirect_to users_url, notice: 'User was successfully deleted.'
     end
-
 
     private
     def user_params
