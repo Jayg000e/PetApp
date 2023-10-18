@@ -1,2 +1,30 @@
-@import "bootstrap"
-
+.navbar {
+    background-color: #6c1db9; // Purple color from the image
+    padding: 10px 0;
+    text-align: center;
+  
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  
+    li {
+      display: inline-block;
+      margin: 0 20px;
+    }
+  
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 10px 20px;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2); // Slight white overlay on hover
+      }
+    }
+}
+  

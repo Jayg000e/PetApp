@@ -1,3 +1,5 @@
-class Activity < ApplicationRecord 
-    belongs_to :pet  # Add this line to establish the association 
-end
+class Activity < ApplicationRecord
+    belongs_to :pet
+
+    # Add any necessary validations or methods here.
+  end

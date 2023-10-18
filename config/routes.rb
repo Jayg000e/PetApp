@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   # frontend route
   get '/render/pets', to: 'renderer#allpets'
   get '/render/pets/:id', to: 'renderer#getPetById'
+  get '/render/pets/:petid/activities', to: 'renderer#getActivities'
 end

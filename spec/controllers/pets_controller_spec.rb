@@ -44,7 +44,8 @@ RSpec.describe PetsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid parameters' do
-      let(:valid_params) { attributes_for(:pet) } # Generates a hash of pet attributes
+      let(:user) { create(:user) }
+      let(:valid_params) { attributes_for(:pet, user_id: user.id) }
 
       it 'creates a new pet' do
         expect {
@@ -52,6 +53,7 @@ RSpec.describe PetsController, type: :controller do
         }.to change(Pet, :count).by(1)
         expect(response).to have_http_status(:created)
       end
+
     end
 
     context 'with invalid parameters' do

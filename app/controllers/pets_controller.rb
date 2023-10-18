@@ -40,8 +40,6 @@ class PetsController < ApplicationController
       "pet_type",
       "birthdate",
       "breed",
-      "created_at",
-      "updated_at",
       "onsale",
       "price",
       "user_id") # Adjust as needed
