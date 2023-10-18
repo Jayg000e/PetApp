@@ -55,6 +55,19 @@ RSpec.describe UsersController, type: :controller do
                 expect(json_response['error']).to eq("Username has already been taken")
             end
         end
+
+        context 'when user information is invalid' do
+            it 'returns an error response' do
+                user_params = { username: 'new_user', password: nil } # Password is too short
+      
+                post :create, params: { user: user_params }, format: :json
+      
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(JSON.parse(response.body)).to include(
+                    'error' => a_kind_of(String) # You can specify the exact error message here if needed
+                )
+            end
+        end
     end
 
     let(:valid_attributes) { { username: 'testuser', password: 'password', role: 'user' } }
@@ -94,6 +107,31 @@ RSpec.describe UsersController, type: :controller do
         it "sets a notice" do
             delete :destroy, params: { id: user.id }
             expect(flash[:notice]).to eq('User was successfully deleted.')
+        end
+    end
+
+    describe '#login' do
+        it 'logs in a user with valid credentials' do
+            user = create(:user, username: 'valid_user', password: 'password123') # Create a user with FactoryBot or similar
+    
+            post :login, body: { username: 'valid_user', password: 'password123' }.to_json, as: :json
+    
+            expect(response).to have_http_status(:success)
+            expect(JSON.parse(response.body)).to include(
+                'token' => a_kind_of(String),
+                'success' => true,
+                'message' => 'Logged in successfully'
+            )
+        end
+    
+        it 'returns an error with invalid credentials' do
+            post :login, body: { username: 'non_existent_user', password: 'invalid_password' }.to_json, as: :json
+    
+            expect(response).to have_http_status(:unauthorized)
+            expect(JSON.parse(response.body)).to include(
+                'success' => false,
+                'error' => 'Invalid username or password'
+            )
         end
     end
 end
