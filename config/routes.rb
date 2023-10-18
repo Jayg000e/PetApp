@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get '/render/pets', to: 'renderer#allpets'
   get '/render/pets/:id', to: 'renderer#getPetById'
   get '/render/pets/:petid/activities', to: 'renderer#getActivities'
+  get '/activities/pet/:petid', to: 'activities#by_pet'
 end

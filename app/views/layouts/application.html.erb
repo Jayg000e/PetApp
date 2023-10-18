@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>PetApp</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -18,9 +19,110 @@
         <li><%= link_to 'pet', '/render/pets/1' %></li> 
         <li><%= link_to 'marketplace', '/render/pets' %></li> 
         <li><%= link_to 'pet', '/render/pets/1' %></li> 
+        <li><a href="#" id="loginLink">Login</a></li> 
       </ul> 
     </nav>
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <form id="loginForm">
+              <input type="text" id="username" placeholder="Email">
+              <input type="password" id="password" placeholder="Password">
+              <input type="submit" value="Log in">
+          </form>
+          
+      </div>
+    </div>
+
+
+    <script>
+      $(document).ready(function() {
+        
+        localStorage.user="123"
+        updateNavBar();
+        // Check the localStorage value and adjust the navigation bar accordingly
+        
+          // Show the modal when "loginLink" is clicked
+          $("#loginLink").click(function(e) {
+              e.preventDefault(); 
+              $("#loginModal").show();
+          });
+
+          // Hide the modal when "close-btn" is clicked or outside the modal-content
+          $(".close-btn").click(function() {
+              $("#loginModal").hide();
+          });
+
+        
+          $("#loginForm").submit(function(e) {
+              e.preventDefault();
+
+              var username = $("#username").val();
+              var password = $("#password").val();
+
+              $.ajax({
+                  type: "POST",
+                  url: "http://localhost:3000/login",
+                  data: {
+                      username: username,
+                      password: password
+                  },
+                  dataType: "json",
+                  success: function(response) {
+                      if (response.success) {
+                          $("#loginModal").hide();
+                          // Optionally, you can redirect the user or do some other action here
+                      } else {
+                          // Display an error message inside the modal
+                          $(".modal-content").append("<p class='error-msg'>Login failed. Please try again.</p>");
+                      }
+                  },
+                  error: function() {
+                      // Handle any errors that occur during the request
+                      $(".modal-content").append("<p class='error-msg'>An error occurred. Please try again later.</p>");
+                  }
+              });
+          });
+        $("#logoutLink").on("click", function(e) {
+            e.preventDefault();
+            // Clear the localStorage.user
+            localStorage.removeItem("user");
+            updateNavBar(); // Update the navbar to show "Login"
+        });
+
+        function updateNavBar() {
+          if (localStorage.user) {
+              // User is logged in
+              $("#loginLink").hide(); // Hide login link
+              // Add logout link. You might need to adjust this based on your HTML structure
+              if (!$("#logoutLink").length) {
+                  $(".navbar ul").append('<li><a href="#" id="logoutLink">Logout</a></li>');
+              }
+          } else {
+              // User is not logged in
+              $("#loginLink").show(); // Show login link
+              $("#logoutLink").remove(); // Remove logout link
+          }
+        }
+
+      });
+    </script>
+
+
+
+    
 
     <%= yield %>
   </body>
 </html>
+
+$(document).ready(function() {
+    // Check the localStorage value and adjust the navigation bar accordingly
+    updateNavBar();
+
+    // Existing code...
+    // ...
+
+    // Handle logout
+    
+});

@@ -1,19 +1,19 @@
 class UsersController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:new, :create, :edit, :update, :destroy]
 
-    # display all users: /users (get)
+    # display all users: 0.0.0.0:3000/users (get)
     def index
       @users = User.all
       render json: @users
     end
 
-    # display single user: /users/id (get)
+    # display single user: 0.0.0.0:3000/users/id (get)
     def show
       @user = User.find(params[:id])
       render json: @user
     end
 
-    # create: /users (post)
+    # create: 0.0.0.0:3000/users (post)
     def new
       @user = User.new
     end
