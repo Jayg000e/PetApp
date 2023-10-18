@@ -10,13 +10,13 @@
 <body>
     <div class="container mt-4">
         <div id="my-container"></div>
-    </div>
+    </div> 
     
     <script>
-    var petid = <%= @petid %>;
+    var userid = <%= @userid %>;
     $(document).ready(function() {
         $.ajax({
-            url: 'http://localhost:3000/activities/pet/' + petid, // Example URL
+            url: 'http://localhost:3000/pets/user/' + userid, // Example URL
             method: 'GET',
             dataType: 'json', // Expect JSON response
             success: function(data) {
