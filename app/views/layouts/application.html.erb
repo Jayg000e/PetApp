@@ -16,9 +16,9 @@
     <nav class="navbar"> 
       <ul> 
         <li><%= link_to 'marketplace', '/render/pets' %></li> 
-        <li><%= link_to 'pet', '/render/pets/1' %></li> 
+        <li><a id="petLink" href="#">pet</a></li>
         <li><%= link_to 'marketplace', '/render/pets' %></li> 
-        <li><%= link_to 'pet', '/render/pets/1' %></li> 
+        <li><a id="mypetLink" href="#">mypet</a></li>
         <li><a href="#" id="loginLink">Login</a></li> 
       </ul> 
     </nav>
@@ -39,6 +39,18 @@
       $(document).ready(function() {
         
         localStorage.user="123"
+        localStorage.petid=3
+        // Retrieve the value of localStorage.petid
+        var petId = localStorage.getItem('petid');
+
+        // Check if petId is not null or undefined
+        if (petId !== null && petId !== undefined) {
+          // Construct the URL with the petId and update the link's href
+          var petLink = $('#petLink');
+          petLink.attr('href', '/render/pets/' + petId);
+        }
+
+
         updateNavBar();
         // Check the localStorage value and adjust the navigation bar accordingly
         
