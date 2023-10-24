@@ -1,0 +1,55 @@
+<html>
+<head>
+  <title>Create Activity</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+
+<div class="content-wrapper">
+    <div class="activity-title">
+        Create a New Activity
+    </div>
+
+    <form id="create_activity_form">
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <input type="text" class="form-control" id="content" name="content" placeholder="Enter activity content...">
+        </div>
+
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" onclick="createActivity()">Create Activity</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+var petid = <%= @petid %>;
+function createActivity() {
+  
+  var data = {
+    content: $('#content').val(),
+    pet_id: petid
+  };
+
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/activities',
+    contentType: 'application/json;charset=UTF-8',
+    data: JSON.stringify({ activity: data }),
+    success: function(response) {
+      alert('Activity created successfully!');
+      console.log(response);
+      window.location.href = `http://localhost:3000/render/pets/${petid}/activities`;
+    },
+    error: function(response) {
+      alert('Error creating activity.');
+      console.log(response);
+    }
+  });
+}
+</script>
+
+</body>
+</html>

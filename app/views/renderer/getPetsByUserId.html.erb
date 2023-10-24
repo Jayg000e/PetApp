@@ -3,44 +3,65 @@
 <head>
     <title>AJAX Example</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <%# <script>var exports = {};</script> %>
-    <%# <script src="https://cdn.jsdelivr.net/npm/openai@4.11.1/index.min.js"></script> %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container mt-4">
         <div id="my-container"></div>
     </div> 
+    <div class="d-flex justify-content-center mt-4">
+        <button class="btn btn-primary" onclick="window.location.href='/render/users/pet';">Create a New Pet</button>
+    </div>
+
+
     
     <script>
-    var userid = <%= @userid %>;
     $(document).ready(function() {
-        $.ajax({
-            url: 'http://localhost:3000/pets/user/' + userid, // Example URL
-            method: 'GET',
-            dataType: 'json', // Expect JSON response
-            success: function(data) {
-                // Handle the JSON data here and render it on the page with Bootstrap styling
-                var html = '';
-                
-                $.each(data, function(index, val) {
-                    html += '<div class="card"><div class="card-body">'
+    var userid = localStorage.getItem('userid');
+    updatePage(userid);
+    
+    setInterval(function() {
+        var currentUserId = localStorage.getItem('userid');
+        if (userid !== currentUserId) {
+            userid = currentUserId;
+            updatePage(userid);
+        }
+    }, 1000); // Check every second
+});
 
-                    for (var key in val) {
-                        if (val.hasOwnProperty(key)) {
-                            html += '<p class="card-text"><strong>' + key + ':</strong> ' + val[key] + '</p>';
-                        }
-                    } 
-                    html += '</div></div>';
-                });
-                
-                $('#my-container').html(html);
-            },
-            error: function() {
-                console.error('Error fetching data.');
-            }
-        });
-    });
+    function updatePage(userid) {
+        if (userid) {
+            $('#create-pet-link').show();
+            $.ajax({
+                url: 'http://localhost:3000/pets/user/' + userid,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    $.each(data, function(index, val) {
+                        html += '<div class="card"><div class="card-body">';
+                        for (var key in val) {
+                            if (val.hasOwnProperty(key)) {
+                                html += '<p class="card-text"><strong>' + key + ':</strong> ' + val[key] + '</p>';
+                            }
+                        } 
+                        html += '<a href="/render/pets/' + val.id + '" class="btn btn-primary mr-2">View Pet</a>';
+                        html += '<a href="/render/pets/' + val.id +'/activities'+'" class="btn btn-primary">View Pet Activities</a>';
+
+                        html += '</div></div>';
+                    });
+                    $('#my-container').html(html);
+                },
+                error: function() {
+                    console.error('Error fetching data.');
+                }
+            });
+        } else {
+            $('#create-pet-link').hide();
+            $('#my-container').html('<p>Please login to view your pets.</p>');
+        }
+    }
+
 </script>
 </body>
 </html>

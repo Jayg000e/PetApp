@@ -1,0 +1,63 @@
+<html>
+<head>
+  <title>Create Pet</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Create a New Pet</h1>
+
+<form id="create_pet_form">
+  <label for="name">Name:</label><br>
+  <input type="text" id="name" name="name"><br>
+  
+  <label for="pet_type">Pet Type:</label><br>
+  <input type="text" id="pet_type" name="pet_type"><br>
+  
+  <label for="birthdate">Birthdate:</label><br>
+  <input type="date" id="birthdate" name="birthdate"><br>
+  
+  <label for="breed">Breed:</label><br>
+  <input type="text" id="breed" name="breed"><br>
+  
+  <label for="onsale">On Sale:</label><br>
+  <input type="checkbox" id="onsale" name="onsale"><br>
+  
+  <label for="price">Price:</label><br>
+  <input type="number" id="price" name="price"><br>
+  
+  <button type="button" onclick="createPet()">Create Pet</button>
+</form>
+
+<script>
+function createPet() {
+  var data = {
+    name: $('#name').val(),
+    pet_type: $('#pet_type').val(),
+    birthdate: $('#birthdate').val(),
+    breed: $('#breed').val(),
+    onsale: $('#onsale').is(':checked'),
+    price: $('#price').val(),
+    user_id: localStorage.userid
+  };
+  
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/pets',
+    contentType: 'application/json;charset=UTF-8',
+    data: JSON.stringify({ pet: data }),
+    success: function(response) {
+      alert('Pet created successfully!');
+      console.log(response);
+      window.location.href = 'http://localhost:3000/render/users/pets';
+    },
+    error: function(response) {
+      alert('Error creating pet.');
+      console.log(response);
+    }
+  });
+}
+</script>
+
+</body>
+

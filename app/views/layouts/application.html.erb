@@ -15,10 +15,7 @@
   <body>
     <nav class="navbar">
     <ul>
-        <li><%= link_to 'marketplace', '/render/pets' %></li>
-        <li><a id="petLink" href="#">pet</a></li>
-        <li><%= link_to 'marketplace', '/render/pets' %></li>
-        <li><a id="mypetLink" href="#">mypet</a></li>
+        <li><a id="mypetLink" href="/render/users/pets">mypet</a></li>
         <li><a href="#" id="loginLink">Login</a></li>
         <li id="loggedInMessageContainer"></li> <!-- Placeholder for the greeting message -->
     </ul>
@@ -42,20 +39,13 @@
     <script>
       $(document).ready(function() {
 
-          initPetLink();
+
           updateNavBar();
           setupEventListeners();
 
-          function initPetLink() {
-              const petId = localStorage.getItem('petid') || '3'; // Default to '3' if not set
-              $('#petLink').attr('href', '/render/pets/' + petId);
-          }
+          
 
-          function updateMyPetLink() {
-              const userId = localStorage.getItem('userid');
-              $('#mypetLink').attr('href', '/render/users/' + userId + '/pets');
-          }
-
+          
 
           function setupEventListeners() {
               $("#loginLink").click(showLoginModal);
@@ -102,7 +92,6 @@
                   localStorage.setItem('username', response.username);
                   localStorage.setItem('userid', response.userid);
                   updateNavBar();
-                  updateMyPetLink();
               } else {
                   displayErrorMessage("Login failed. Please try again.");
               }
@@ -127,7 +116,6 @@
               localStorage.removeItem("username");
               localStorage.removeItem("userid");
               updateNavBar();
-              updateMyPetLink()
           }
 
           function updateNavBar() {
