@@ -4,6 +4,7 @@ class RendererController < ApplicationController
   end
   def getPetById
     @petid=params[:id]
+    @apiKey=Rails.application.credentials[:api_key]
     render 'getPetById'
   end
   def getActivities
