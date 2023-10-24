@@ -16,8 +16,12 @@
 
     
     <script>
+    var BASE_URL = "<%= request.base_url %>";
     $(document).ready(function() {
+    
     var userid = localStorage.getItem('userid');
+    console.log(BASE_URL)
+    console.log(BASE_URL+'/pets/user/' + userid)
     updatePage(userid);
     
     setInterval(function() {
@@ -33,7 +37,7 @@
         if (userid) {
             $('#create-pet-link').show();
             $.ajax({
-                url: 'http://localhost:3000/pets/user/' + userid,
+                url: BASE_URL+'/pets/user/' + userid,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {

@@ -37,8 +37,9 @@
 
 
     <script>
+        
       $(document).ready(function() {
-
+          var BASE_URL = "<%= request.base_url %>";
 
           updateNavBar();
           setupEventListeners();
@@ -72,7 +73,7 @@
 
               $.ajax({
                   type: "POST",
-                  url: "http://localhost:3000/login",
+                  url: BASE_URL+"/login",
                   data: JSON.stringify({
                       username: username,
                       password: password

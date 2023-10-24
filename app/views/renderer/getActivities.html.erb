@@ -23,7 +23,7 @@
     var petid = <%= @petid %>;
     $(document).ready(function() {
         $.ajax({
-            url: 'http://localhost:3000/activities/pet/' + petid, // Example URL
+            url: BASE_URL+'/activities/pet/' + petid, // Example URL
             method: 'GET',
             dataType: 'json', // Expect JSON response
             success: function(data) {

@@ -30,6 +30,7 @@
 </form>
 
 <script>
+  var BASE_URL = "<%= request.base_url %>";
 function createPet() {
   var data = {
     name: $('#name').val(),
@@ -43,13 +44,13 @@ function createPet() {
   
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/pets',
+    url: BASE_URL+'/pets',
     contentType: 'application/json;charset=UTF-8',
     data: JSON.stringify({ pet: data }),
     success: function(response) {
       alert('Pet created successfully!');
       console.log(response);
-      window.location.href = 'http://localhost:3000/render/users/pets';
+      window.location.href = BASE_URL+'/render/users/pets';
     },
     error: function(response) {
       alert('Error creating pet.');
