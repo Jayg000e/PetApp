@@ -52,24 +52,37 @@ class UsersController < ApplicationController
         redirect_to users_url, notice: 'User was successfully deleted.'
     end
 
+  #   def login
+  #     user = User.find_by(username: params[:username])
+
+  #     if user && user.password == params[:password]
+  #         payload = { user_id: user.id }
+  #         token = JWT.encode(payload, Rails.application.secrets.secret_key_base, 'HS256')
+  #         render json: { token: token, success: true, message: 'Logged in successfully' }
+  #     else
+  #         render json: { success: false, error: 'Invalid username or password' }, status: :unauthorized
+  #     end
+  # end
+
   def login
     # Parse the JSON request body to access the username and password.
+
     request_body = JSON.parse(request.body.read)
-  
+
     username = request_body["username"]
     password = request_body["password"]
-  
+
     user = User.find_by(username: username)
-  
+
     if user && user.password == password
       payload = { user_id: user.id }
       token = JWT.encode(payload, Rails.application.secrets.secret_key_base, 'HS256')
-      render json: { token: token, success: true, message: 'Logged in successfully' }
+      render json: { token: token, success: true, message: 'Logged in successfully' ,username: username,userid:user.id}
     else
-      render json: { success: false, error: 'Invalid username or password' }, status: :unauthorized
+      render json: { success: false, error: 'Invalid username or password',username: username,userid:-1 }, status: :unauthorized
     end
   end
-  
+
 
     private
     def user_params

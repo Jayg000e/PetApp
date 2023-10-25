@@ -1,7 +1,7 @@
-class ActivitiesController < ApplicationController 
+class ActivitiesController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:create]
-  
-    def index 
+
+    def index
         @activities = Activity.all
         render json: @activities
     end
@@ -12,9 +12,9 @@ class ActivitiesController < ApplicationController
     end
 
     def by_pet
-      # Retrieve activites belonging to the pet with the provided: petid 
+      # Retrieve activites belonging to the pet with the provided: petid
       pet_id = params[:petid]
-      activites = Activity.where(pet_id: pet_id)  
+      activites = Activity.where(pet_id: pet_id)
 
       if activites.empty?
         render json: { error: "No activities found for pet with ID #{pet_id}" }, status: :not_found
@@ -22,25 +22,23 @@ class ActivitiesController < ApplicationController
         render json: activites, status: :ok
       end
     end
- 
+
     def create
-      @activity = Activity.new(activity_params)
-      
-      if @activity.save
-        render json: @activity, status: :created 
+      activity = Activity.new(activity_params)
+
+      if activity.save
+        render json: activity, status: :created
       else
-        render json: { error: @activity.errors.full_messages.join(', ') }, status: :unprocessable_entity
+        render json: { error: activity.errors.full_messages.join(', ') }, status: :unprocessable_entity
       end
     end
-  
-    private 
+
+    private
 
     def activity_params
       params.require(:activity).permit(
-        :content, 
-        :pet_id, 
-        :created_at, 
-        :updated_at)
+        "content",
+        "pet_id",
+        )
     end
   end
-  
