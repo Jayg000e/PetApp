@@ -82,6 +82,10 @@ group :test do
 
 end
 
+group :production do
+  gem 'pg', '>= 1.1', '< 1.6'
+end
+
 
 # gpt
 gem 'ruby-openai'
@@ -96,7 +100,6 @@ gem 'sassc-rails'
 
 gem 'jwt'
 
-gem 'pg', '>= 1.1', '< 1.6'
 
 
 
