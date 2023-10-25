@@ -1,4 +1,4 @@
-Feature: Pet Page
+Feature: Pet Info
   As a user
   I want to click "pet" on the home page
   So that I can view an information card and check how well I know my pet
