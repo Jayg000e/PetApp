@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   resources :pets
   resources :activities
   resources :users
+
+
+  root to: redirect('/render/users/pets')
+
+
   get '/pets/user/:userid', to: 'pets#by_user'
   get '/activities/pet/:petid', to: 'activities#by_pet'
   post '/login', to: 'users#login'

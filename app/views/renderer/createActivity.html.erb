@@ -42,7 +42,7 @@ function createActivity() {
     success: function(response) {
       alert('Activity created successfully!');
       console.log(response);
-      window.location.href = BASE_URL+`render/pets/${petid}/activities`;
+      window.location.href = BASE_URL+`/render/pets/${petid}/activities`;
     },
     error: function(response) {
       alert('Error creating activity.');

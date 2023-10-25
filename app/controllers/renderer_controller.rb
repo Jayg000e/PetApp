@@ -9,6 +9,7 @@ class RendererController < ApplicationController
   end
   def getActivities
     @petid=params[:petid]
+    puts @petid,"petid"
     render 'getActivities'
   end
   def getPetsByUserId
