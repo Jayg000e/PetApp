@@ -96,7 +96,6 @@ gem 'sassc-rails'
 
 gem 'jwt'
 
-gem 'pg', '>= 1.1', '< 1.6'
-
+# gem 'pg', '>= 1.1', '< 1.6'
 
 
