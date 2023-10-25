@@ -19,5 +19,21 @@ RSpec.describe "Renderers", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
-
+  describe 'Renderer Routing', type: :routing do
+    it 'routes GET /render/users/pet to renderer#createPet' do
+      expect(get: '/render/users/pet').to route_to('renderer#createPet')
+    end
+  end
+  describe "GET /render/pets/:petid/activity" do
+    it "returns http success" do
+      get "/render/pets/:petid/activity"
+      expect(response).to have_http_status(:success)
+    end
+  end
+  describe "GET /render/users/pets" do
+    it "returns http success" do
+      get "/render/users/pets"
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
