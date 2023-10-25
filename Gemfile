@@ -95,3 +95,8 @@ gem 'bootstrap'
 gem 'sassc-rails'
 
 gem 'jwt'
+
+gem 'pg', '>= 1.1', '< 1.6'
+
+
+

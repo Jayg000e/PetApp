@@ -11,12 +11,19 @@
     <div class="container mt-4">
         <div id="my-container"></div>
     </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <%= link_to "/render/pets/#{@petid}/activity", class: "btn btn-primary" do %>
+            Create a New Activity
+        <% end %>
+    </div>
+
     
     <script>
     var petid = <%= @petid %>;
     $(document).ready(function() {
         $.ajax({
-            url: 'http://localhost:3000/activities/pet/' + petid, // Example URL
+            url: BASE_URL+'/activities/pet/' + petid, // Example URL
             method: 'GET',
             dataType: 'json', // Expect JSON response
             success: function(data) {

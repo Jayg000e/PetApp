@@ -22,11 +22,13 @@
     <script>
         var petData;
         var petid = <%= @petid %>;
+        var apiKey = "<%= @apiKey %>";
+        var BASE_URL = "<%= request.base_url %>";
         $(document).ready(function() {
             
             
             $.ajax({
-                url: 'http://localhost:3000/pets/' + petid, // Example URL
+                url: BASE_URL+'/pets/' + petid, // Example URL
                 method: 'GET',
                 dataType: 'json', // Expect JSON response
                 success: function(data) {
@@ -50,7 +52,6 @@
             $('#generateButton').click(function() {
                 
                 $('#loadingMessage').show();
-                const apiKey = "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";
 
                 // Define the API endpoint
                 const apiUrl = 'https://api.openai.com/v1/chat/completions';
