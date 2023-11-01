@@ -4,6 +4,9 @@ Feature: Pet List
   So that I can see information about each pet
 
   Scenario: Display list of pets
+    Given there are users with the following details:
+      | Username  | Password  | Role |
+      | user1     | password1 |      |
     Given there are pets with the following details:
       | Name      | Pet Type | Birthdate  | Breed            |
       | Fido      | Dog      | 2019-05-10 | Golden Retriever |

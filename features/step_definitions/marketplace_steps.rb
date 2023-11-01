@@ -1,11 +1,9 @@
-# In your Ruby step definitions file, typically something like home_page_steps.rb
-
 Given("I am on the home page") do
-    visit('/render/pets') # Replace with the actual URL of your home page
+    visit('/render/pets')
   end
   
 Then("I should see a navigation bar") do
-  expect(page).to have_css('.navbar') # Assuming a CSS class "navigation-bar" for the navigation bar
+  expect(page).to have_css('.navbar')
 end
 
 Then("the navigation bar should contain the {string} list item") do |list_item_text|
