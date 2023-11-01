@@ -1,5 +1,3 @@
-# features/step_definitions/pet_list_steps.rb
-
 Given("there are pets with the following details:") do |table|
   # Iterate through the table rows and create pets with the specified details
   table.hashes.each do |pet_data|
