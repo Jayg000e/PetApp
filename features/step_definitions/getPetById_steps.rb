@@ -11,16 +11,6 @@ When("I load the pet details for pet with ID {string}") do |id|
   visit("/render/pets/#{id}")
 end
 
-When("I click the {string} button and wait") do |button_text|
-  click_button(button_text)
-  # Wait for the #loadingMessage to disappear
-  expect(page).to have_css('#loadingMessage', wait: 15)
-  expect(page).to have_no_css('#loadingMessage', wait: 15)
-
-  # Wait for at least one div inside #questions to appear
-  expect(page).to have_css('#questions', minimum: 1, wait: 15)
-end
-
 
 Then("I should see the pet details displayed in a card") do
   expect(page).to have_css('#my-container', wait: 15)
@@ -28,12 +18,20 @@ end
 
 
 Then("I should see a list of questions about the pet's breed") do
-  expect(page).to have_css('#questions', minimum: 1, wait: 30)
+  expect(page).to have_css('#questions div', minimum: 1, wait: 30)
 end
 
-And("I should see a button to {string}") do |button_text|
-  expect(page).to have_button(button_text, wait: 30)
+# And("I should see a button with the text {string}") do |button_text|
+#   wait = Selenium::WebDriver::Wait.new(timeout: 20)
+#   button = wait.until { find_button(button_text, visible: false) }
+#   expect(button).to be_visible
+# end
+Then(/I should see a button to "([^"]*)"/) do |button_text|
+  wait = Selenium::WebDriver::Wait.new(timeout: 20)
+  element = wait.until {page.has_button?(button_text)}
+  expect(page).to have_button(button_text)
 end
+
 
 Then("I should see the answers to the generated questions") do
   expect(page).to have_css('#answers', minimum: 1)

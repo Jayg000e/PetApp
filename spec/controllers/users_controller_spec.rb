@@ -59,9 +59,9 @@ RSpec.describe UsersController, type: :controller do
         context 'when user information is invalid' do
             it 'returns an error response' do
                 user_params = { username: 'new_user', password: nil } # Password is too short
-      
+
                 post :create, params: { user: user_params }, format: :json
-      
+
                 expect(response).to have_http_status(:unprocessable_entity)
                 expect(JSON.parse(response.body)).to include(
                     'error' => a_kind_of(String) # You can specify the exact error message here if needed
@@ -113,9 +113,9 @@ RSpec.describe UsersController, type: :controller do
     describe '#login' do
         it 'logs in a user with valid credentials' do
             user = create(:user, username: 'valid_user', password: 'password123') # Create a user with FactoryBot or similar
-    
+
             post :login, body: { username: 'valid_user', password: 'password123' }.to_json, as: :json
-    
+
             expect(response).to have_http_status(:success)
             expect(JSON.parse(response.body)).to include(
                 'token' => a_kind_of(String),
@@ -123,10 +123,10 @@ RSpec.describe UsersController, type: :controller do
                 'message' => 'Logged in successfully'
             )
         end
-    
+
         it 'returns an error with invalid credentials' do
             post :login, body: { username: 'non_existent_user', password: 'invalid_password' }.to_json, as: :json
-    
+
             expect(response).to have_http_status(:unauthorized)
             expect(JSON.parse(response.body)).to include(
                 'success' => false,
@@ -134,4 +134,18 @@ RSpec.describe UsersController, type: :controller do
             )
         end
     end
+
+    describe "PATCH #update" do
+        context "with invalid user information" do
+          it "returns an unprocessable entity status" do
+            allow_any_instance_of(User).to receive(:update).and_return(false)
+            patch :update, params: { id: user.id, user: { password: 'newpassword' } }
+
+            expect(response).to have_http_status(:unprocessable_entity)
+            json_response = JSON.parse(response.body)
+            expect(json_response['error']).to eq('Password update failed')
+          end
+        end
+    end
+
 end
