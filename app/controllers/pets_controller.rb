@@ -11,6 +11,13 @@ class PetsController < ApplicationController
     render json: @pet
   end
 
+  def onsale_pets
+    # Perform a JOIN operation with the users table.
+    @pets_on_sale = Pet.joins(:user).where(onsale: true).select('pets.*, users.username as owner_name, users.email as owner_email')
+    # Render the joined data as JSON.
+    render json: @pets_on_sale.as_json(include: { user: { only: [:username, :email] } })
+  end
+
   def by_user
     # Retrieve pets belonging to the user with the provided :userid
     user_id = params[:userid]

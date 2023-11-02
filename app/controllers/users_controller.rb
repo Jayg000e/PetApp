@@ -33,15 +33,26 @@ class UsersController < ApplicationController
       end
     end
 
-    # edit: 0.0.0.0:3000/users/:id (patch)
+    # # edit: 0.0.0.0:3000/users/:id (patch)
+    # def update
+    #   @user = User.find(params[:id])
+
+    #   if @user.update(password: user_params[:password])
+    #     flash[:notice] = 'Password was successfully updated'
+    #     render json: { user: @user, message: 'Password was successfully updated' }, status: :ok
+    #   else
+    #     render json: { error: 'Password update failed' }, status: :unprocessable_entity
+    #   end
+    # end
+
     def update
       @user = User.find(params[:id])
 
-      if @user.update(password: user_params[:password])
-        flash[:notice] = 'Password was successfully updated'
-        render json: { user: @user, message: 'Password was successfully updated' }, status: :ok
+      # Assuming you want to allow email to be updated as well.
+      if @user.update(user_params)
+        render json: { user: @user, message: 'User was successfully updated' }, status: :ok
       else
-        render json: { error: 'Password update failed' }, status: :unprocessable_entity
+        render json: { error: 'User update failed' }, status: :unprocessable_entity
       end
     end
 
@@ -86,11 +97,11 @@ class UsersController < ApplicationController
 
     private
     def user_params
-      params.require(:user).permit(:username, :password, :role)
+      params.require(:user).permit(:username, :password, :email, :role)
     end
 
     private
     def missing_user_info?(user_params)
-      user_params[:username].nil? or user_params[:username].blank? or user_params[:password].nil? or user_params[:password].blank?
+      user_params[:username].blank? || user_params[:email].blank? || user_params[:password].blank?
     end
   end

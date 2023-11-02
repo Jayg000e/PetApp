@@ -25,4 +25,10 @@ class RendererController < ApplicationController
     @petid=params[:petid]
     render 'createActivity'
   end
+
+  def market
+    @apiKey=Rails.application.credentials[:api_key]
+    render 'market'
+  end
+
 end

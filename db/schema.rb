@@ -10,13 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_175331) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_170407) do
   create_table "activities", force: :cascade do |t|
     t.string "content"
-    t.bigint "pet_id"
+    t.integer "pet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["pet_id"], name: "index_activities_on_pet_id"
@@ -31,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_175331) do
     t.datetime "updated_at", null: false
     t.boolean "onsale"
     t.float "price"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
@@ -41,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_175331) do
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
   end
 
   add_foreign_key "activities", "pets"

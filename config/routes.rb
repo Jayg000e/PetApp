@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   root to: redirect('/render/users/pets')
 
-
+  get '/onsale', to: 'pets#onsale_pets'
   get '/pets/user/:userid', to: 'pets#by_user'
   get '/activities/pet/:petid', to: 'activities#by_pet'
   post '/login', to: 'users#login'
@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get '/render/pets/:petid/activity', to: 'renderer#createActivity'
 
   get '/render/users/pets', to: 'renderer#getPetsByUserId'
+
+  get '/render/market', to: 'renderer#market'
 
 
 end

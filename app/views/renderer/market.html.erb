@@ -1,0 +1,79 @@
+<title>AJAX Example</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<form id="myForm">
+    <label for="myInput">Let us know more about you! We will find some pet that match you.</label>
+    <input type="text" id="myInput" name="myInput" required>
+    <button type="submit">Submit</button>
+</form>
+<div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
+<div id="my-container"></div>
+<div id="my-container2"></div>
+
+
+<script>
+var BASE_URL = "<%= request.base_url %>";
+var apiKey = "<%= @apiKey %>";
+var category;
+$(document).ready(function() {
+    $.ajax({
+    url: BASE_URL+'/onsale', // Example URL
+    method: 'GET',
+    dataType: 'json', // Expect JSON response
+    success: function(data) {
+        // Handle the JSON data here and render it on the page
+        category = data.map(pet => ({
+            breed: pet.breed,
+            pet_type: pet.pet_type
+        }));
+        console.log(category)
+        $('#my-container').html('<p>' + JSON.stringify(data) + '</p>');
+    },
+    error: function() {
+        console.error('Error fetching data.');
+    }
+    });
+
+    $('#myForm').on('submit', function(e) {
+        // Prevent the default form submission
+        e.preventDefault();
+        $('#loadingMessage').show();
+        // Get the value from the input and store it in the variable
+        var preference=$('#myInput').val();
+
+        const apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+        // Define consversation
+        const consversation = [
+            {"role": "system", "content": "Return the answer as a JSON object.Do not choose an entry that is not in the json provided"},
+            {"role": "user", "content": `Based on my preference: ${preference}, Choose 1 entries(with pet_type and breed) from: ${JSON.stringify(category)} that best suit me and give me the corresponding reason`},
+        ]
+        // Data to send in the request
+        const requestData = {
+            model: 'gpt-3.5-turbo',
+            messages: consversation,
+            temperature: 0.7
+        };
+
+        // Send the POST request to the OpenAI API
+        $.ajax({
+            type: 'POST',
+            url: apiUrl,
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+            },
+            data: JSON.stringify(requestData),
+            success: function(data) {
+                $('#loadingMessage').hide();
+                
+                const responseContent = data.choices[0].message.content;
+                $('#my-container2').html(`<p>${responseContent}</p>`);
+            },
+            error: function(xhr, status, error) {
+            console.error('Error:', error);
+            }
+        });
+
+    });
+});
+  </script>
