@@ -9,8 +9,14 @@
 </head>
 <body>
     <div class="container mt-4">
+        <div id="my-container2"></div>
+    </div>
+    <div class="container mt-4">
         <div id="my-container"></div>
     </div>
+    <button id="generateButton">Get some advice to better train your pet</button>
+    <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
+    <div id="my-container3"></div>
 
     <div class="d-flex justify-content-center mt-4">
         <%= link_to "/render/pets/#{@petid}/activity", class: "btn btn-primary" do %>
@@ -19,16 +25,24 @@
     </div>
 
     
+
+    
     <script>
     var petid = <%= @petid %>;
+    var apiKey = "<%= @apiKey %>";
+    var activities;
+    var petData;
     var BASE_URL = "<%= request.base_url %>";
     $(document).ready(function() {
+
         $.ajax({
             url: BASE_URL+'/activities/pet/' + petid, // Example URL
             method: 'GET',
             dataType: 'json', // Expect JSON response
             success: function(data) {
                 // Handle the JSON data here and render it on the page with Bootstrap styling
+                activities=data.map(activity => activity.content);
+                console.log(activities)
                 var html = '';
                 $.each(data, function(index, val) {
                     html += '<div class="card"><div class="card-body">'
@@ -47,6 +61,68 @@
                 console.error('Error fetching data.');
             }
         });
+        $.ajax({
+                url: BASE_URL+'/pets/' + petid, // Example URL
+                method: 'GET',
+                dataType: 'json', // Expect JSON response
+                success: function(data) {
+                    petData=data
+                    // Handle the JSON data here and render it on the page with Bootstrap styling
+                    var html = '<div class="card"><div class="card-body">';
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            html += '<p class="card-text"><strong>' + key + ':</strong> ' + data[key] + '</p>';
+                        }
+                    }
+                    html += '</div></div>';
+                    $('#my-container2').html(html);
+                },
+                error: function() {
+                    console.error('Error fetching data.');
+                }
+            });
+        $('#generateButton').click(function(e) {
+            // Prevent the default form submission
+            e.preventDefault();
+            $('#loadingMessage').show();
+            // Get the value from the input and store it in the variable
+            var preference=$('#myInput').val();
+
+            const apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+            // Define consversation
+            const consversation = [
+                {"role": "system", "content": "Return the answer as a JSON object."},
+                {"role": "user", "content": `Based on my pet's pet_type and breed: ${{pettype:petData.pet_type,breed:petData.breed}}, and its recent activities: ${activities},give me some advises on how to better train it`},
+            ]
+            // Data to send in the request
+            const requestData = {
+                model: 'gpt-3.5-turbo',
+                messages: consversation,
+                temperature: 0.7
+            };
+
+            // Send the POST request to the OpenAI API
+            $.ajax({
+                type: 'POST',
+                url: apiUrl,
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+                },
+                data: JSON.stringify(requestData),
+                success: function(data) {
+                    $('#loadingMessage').hide();
+                    
+                    const responseContent = data.choices[0].message.content;
+                    $('#my-container3').html(`<p>${responseContent}</p>`);
+                },
+                error: function(xhr, status, error) {
+                console.error('Error:', error);
+                }
+            });
+
+    });
     });
 </script>
 </body>

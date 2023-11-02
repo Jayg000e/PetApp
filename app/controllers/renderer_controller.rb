@@ -9,6 +9,7 @@ class RendererController < ApplicationController
   end
   def getActivities
     @petid=params[:petid]
+    @apiKey=Rails.application.credentials[:api_key]
     puts @petid,"petid"
     render 'getActivities'
   end
