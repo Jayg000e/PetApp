@@ -67,4 +67,24 @@ RSpec.describe PetsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #onsale_pets' do
+    it 'returns a JSON response with on sale pets and owner information' do
+      user = create(:user)  
+      pet = create(:pet, user: user, onsale: true) 
+
+      get :onsale_pets
+
+      expect(response).to have_http_status(:success)
+      parsed_response = JSON.parse(response.body)
+
+      expect(parsed_response).to be_an(Array)
+      expect(parsed_response.first).to have_key('id')  # Assuming there is an 'id' key in the JSON response
+      expect(parsed_response.first).to have_key('owner_name')
+      expect(parsed_response.first).to have_key('owner_email')
+      expect(parsed_response.first['onsale']).to be_truthy
+      expect(parsed_response.first['owner_name']).to eq(user.username)
+      expect(parsed_response.first['owner_email']).to eq(user.email)
+    end
+  end
 end

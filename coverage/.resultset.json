@@ -311,31 +311,31 @@
   },
   "RSpec": {
     "coverage": {
-      "/home/jayg/Desktop/PetApp/app/helpers/activities_helper.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/activities_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/application_helper.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/pets_helper.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/pets_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/renderer_helper.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/renderer_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/activities_controller.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/activities_controller.rb": {
         "lines": [
           1,
           1,
@@ -376,71 +376,6 @@
           null,
           1,
           2,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/home/jayg/Desktop/PetApp/app/controllers/application_controller.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/home/jayg/Desktop/PetApp/app/controllers/pets_controller.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          null,
-          0,
-          null,
-          0,
-          null,
-          null,
-          1,
-          null,
-          2,
-          2,
-          null,
-          2,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          2,
-          2,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
-          1,
-          2,
-          null,
-          null,
-          null,
-          null,
           null,
           null,
           null,
@@ -448,7 +383,72 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/users_controller.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/pets_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          2,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/users_controller.rb": {
         "lines": [
           1,
           1,
@@ -467,21 +467,24 @@
           null,
           null,
           1,
-          4,
+          3,
           null,
-          4,
-          4,
-          4,
+          3,
+          1,
+          1,
+          1,
           null,
-          0,
-          0,
-          0,
           null,
-          0,
-          0,
-          0,
+          2,
+          1,
+          1,
+          1,
           null,
-          0,
+          1,
+          null,
+          1,
+          1,
+          1,
           null,
           null,
           null,
@@ -549,17 +552,17 @@
           null,
           1,
           1,
-          10,
+          11,
           null,
           null,
           1,
           1,
-          4,
+          3,
           null,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/activity.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/activity.rb": {
         "lines": [
           1,
           1,
@@ -568,14 +571,14 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/application_record.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/pet.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/pet.rb": {
         "lines": [
           1,
           1,
@@ -585,7 +588,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/user.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -596,7 +599,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/renderer_controller.rb": {
+      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/renderer_controller.rb": {
         "lines": [
           1,
           1,
@@ -611,15 +614,7 @@
           1,
           1,
           1,
-          null,
           1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          0,
-          null,
           null,
           1,
           1,
@@ -627,14 +622,23 @@
           null,
           null,
           1,
-          0,
-          0,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
           null,
           null,
           null
         ]
       }
     },
-    "timestamp": 1698952942
+    "timestamp": 1698997304
   }
 }

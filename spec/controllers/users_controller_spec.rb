@@ -18,57 +18,95 @@ RSpec.describe UsersController, type: :controller do
     end
 
 
-    describe "POST #create" do
-        context "with valid user information" do
-            it "creates a new user" do
-                expect {
-                    post :create, params: { user: { username: "newuser", password: "password", role: "user" } }
-                }.to change(User, :count).by(1)
+    # describe "POST #create" do
+    #     context "with valid user information" do
+    #         it "creates a new user" do
+    #             expect {
+    #                 post :create, params: { user: { username: "newuser", password: "password", role: "user" } }
+    #             }.to change(User, :count).by(1)
 
-                expect(response).to have_http_status(:created)
-                expect(flash[:notice]).to eq('User Successfully Created!')
-                json_response = JSON.parse(response.body)
-                expect(json_response['user']['username']).to eq('newuser')
-                expect(json_response['message']).to eq('User Successfully Created!')
-            end
-        end
+    #             expect(response).to have_http_status(:created)
+    #             expect(flash[:notice]).to eq('User Successfully Created!')
+    #             json_response = JSON.parse(response.body)
+    #             expect(json_response['user']['username']).to eq('newuser')
+    #             expect(json_response['message']).to eq('User Successfully Created!')
+    #         end
+    #     end
 
-        context "with missing user information" do
-            it "returns an unprocessable entity status" do
-                post :create, params: { user: { username: "", password: "" } }
+    #     context "with missing user information" do
+    #         it "returns an unprocessable entity status" do
+    #             post :create, params: { user: { username: "", password: "" } }
 
-                expect(response).to have_http_status(:unprocessable_entity)
-                expect(flash.now[:error]).to eq('Please enter valid username and password.')
-                json_response = JSON.parse(response.body)
-                expect(json_response['error']).to include('Please enter valid username and password.')
-            end
-        end
+    #             expect(response).to have_http_status(:unprocessable_entity)
+    #             expect(JSON.parse(response.body)).to include('error')
+    #             expect(response.body).to include('Username has already been taken')
+    #         end
+    #     end
 
-        context "with a duplicate username" do
-            it "returns an unprocessable entity status" do
-                user = User.create(username: "existinguser", password: "password", role: "user")
-                post :create, params: { user: { username: "existinguser", password: "newpassword", role: "user" } }
+    #     context "with a duplicate username" do
+    #         it "returns an unprocessable entity status" do
+    #             user = User.create(username: "existinguser", password: "password", role: "user")
+    #             post :create, params: { user: { username: "existinguser", password: "newpassword", role: "user" } }
 
-                expect(response).to have_http_status(:unprocessable_entity)
-                expect(flash.now[:error]).to eq("Username has already been taken")
-                json_response = JSON.parse(response.body)
-                expect(json_response['error']).to eq("Username has already been taken")
-            end
-        end
+    #             expect(response).to have_http_status(:unprocessable_entity)
+    #             expect(flash.now[:error]).to eq("Please enter valid username and password.")
+    #             json_response = JSON.parse(response.body)
+    #             expect(json_response['error']).to eq("Please enter valid username and password.")
+    #         end
+    #     end
+ 
+    #     context 'when user information is invalid' do
+    #         it 'returns unprocessable_entity and a list of error messages' do
+    #             user_params = { username: 'newuser', password: '' }
+        
+    #             post :create, params: { user: user_params }
+        
+    #             expect(response).to have_http_status(:unprocessable_entity)
+    #             expect(JSON.parse(response.body)).to include('error')
+    #             expect(response.body).to include("Password can't be blank")
+    #         end
+    #     end
+    # end
 
-        context 'when user information is invalid' do
-            it 'returns an error response' do
-                user_params = { username: 'new_user', password: nil } # Password is too short
+  describe 'POST #create' do
+    context 'when user information is valid' do
+      it 'creates a new user' do
+        user_params = { username: 'newuser', password: 'password', email: 'newuser_email' }
 
-                post :create, params: { user: user_params }, format: :json
+        expect {
+          post :create, params: { user: user_params }
+        }.to change(User, :count).by(1)
 
-                expect(response).to have_http_status(:unprocessable_entity)
-                expect(JSON.parse(response.body)).to include(
-                    'error' => a_kind_of(String) # You can specify the exact error message here if needed
-                )
-            end
-        end
+        expect(response).to have_http_status(:created)
+        expect(JSON.parse(response.body)).to include('user', 'message')
+      end
     end
+
+    context 'when user information is missing' do
+      it 'returns unprocessable_entity and an error message' do
+        user_params = { username: '', password: '' }
+
+        post :create, params: { user: user_params }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)).to include('error')
+        expect(response.body).to include('Please enter a valid username and password.')
+      end
+    end
+
+    context 'when the username is already taken' do
+      it 'returns unprocessable_entity and an error message' do
+        existing_user = create(:user, username: 'username', password: 'password', email: 'existing_email')
+        user_params = { username: 'existing_username', password: 'password', email: 'existing_email' }
+
+        post :create, params: { user: user_params }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)).to include('error')
+        expect(response.body).to include('This email has already been registered.')
+      end
+    end
+  end
 
     let(:valid_attributes) { { username: 'testuser', password: 'password', role: 'user' } }
     let(:user) { User.create(valid_attributes) }

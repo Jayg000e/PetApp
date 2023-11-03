@@ -18,18 +18,21 @@ class UsersController < ApplicationController
       user = User.new(user_params)
 
       if missing_user_info?(user_params)
-        flash.now[:error] = 'Please enter valid username and password.'
-        render json: { error: 'Please enter valid username and password.' }, status: :unprocessable_entity
+        flash.now[:error] = 'Please enter a valid username and password.'
+        render json: { error: 'Please enter a valid username and password.' }, status: :unprocessable_entity
+        return
+      end
 
-      elsif User.find_by(username: user_params["username"])
-        flash.now[:error] = "Username has already been taken"
-        render json: { error: "Username has already been taken" }, status: :unprocessable_entity
-
-      elsif user.save
+      if User.find_by(email: user_params["email"])
+        flash.now[:error] = 'This email has already been registered.'
+        render json: { error: 'This email has already been registered.' }, status: :unprocessable_entity
+        return
+      end
+      @user = User.create(user_params)
+      # user = User.new(user_params)
+      if @user.save
         flash[:notice] = 'User Successfully Created!'
         render json: { user: user, message: 'User Successfully Created!' }, status: :created
-      else
-        render json: { error: user.errors.full_messages.join(', ') }, status: :unprocessable_entity
       end
     end
 
@@ -50,9 +53,9 @@ class UsersController < ApplicationController
 
       # Assuming you want to allow email to be updated as well.
       if @user.update(user_params)
-        render json: { user: @user, message: 'User was successfully updated' }, status: :ok
+        render json: { user: @user, message: 'Password was successfully updated' }, status: :ok
       else
-        render json: { error: 'User update failed' }, status: :unprocessable_entity
+        render json: { error: 'Password update failed' }, status: :unprocessable_entity
       end
     end
 
