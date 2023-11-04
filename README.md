@@ -1,11 +1,10 @@
 # G-PeTradise: Test, Track, Trade
 
-**Team Members:**
 
-- Yunjia Wang (yw4105)
-- Yu-Hsin Huang (yh3666)
-- Hongzheng Zhu (hz2915)
-- Jia Guo (jg4692)
+## TODOs
+
+- UI
+- Cucumber test
 
 ## Dependencies
 
