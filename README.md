@@ -2,10 +2,13 @@
 
 **Team Members:**
 
-- Yunjia Wang (yw4105)
-- Yu-Hsin Huang (yh3666)
-- Hongzheng Zhu (hz2915)
+Contribution History: [Link](https://github.com/Jayg000e/PetApp/graphs/contributors?from=2023-09-17&to=2023-11-04&type=c)
+
 - Jia Guo (jg4692)
+- Yu-Hsin Huang (yh3666)
+- Yunjia Wang (yw4105)
+- Hongzheng Zhu (hz2915)
+
 
 ## Dependencies
 
