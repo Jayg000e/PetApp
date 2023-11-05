@@ -1,3 +1,19 @@
+body, html {
+  height: 100%;
+  font-family: "Inconsolata", sans-serif;
+}
+
+.bgimg {
+  background-position: center;
+  background-size: cover;
+  background-image: url("/images/bg.jpeg");
+  min-height: 75%;
+}
+
+.menu {
+  display: none;
+}
+
 .navbar {
     background-color: #6c1db9; // Purple color from the image
     padding: 10px 0;
@@ -28,6 +44,7 @@
       }
     }
 }
+
 .modal {
   display: none;
   position: fixed;
@@ -44,8 +61,64 @@
       margin: 15% auto;
       padding: 20px;
       border: 1px solid #888;
-      width: 30%;
+      width: 25%;
+
+      h1 {
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 1px solid silver;
+        color: #A9A9A9;
+      }
+    
+      input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+      }
+    
+      input[type=text]:focus,  input[type=password]:focus{
+        background-color: #ddd;
+      }
+    
+      input[type=submit] {
+        border-radius: 6px;
+        height: 44px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 0 30px;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-align: center;
+        border: none; 
+        background-color: #CBC3E3;
+        color: #341535;
+      }
+    
+      input[type=submit]:hover {
+        color: #CBC3E3;
+        background-color: #341535;
+        box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+      }
   }
+
+  .splt{
+    height:1px;
+    margin:50px 0 50px 0;
+    background-color: silver;
+  }
+
+  .footer {
+    text-align:center;
+
+    #signup{
+      color: #341535;
+    }
+  } 
 }
 
 .close-btn {
@@ -53,11 +126,14 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
+  position: absolute;
+  right: 10px;
+  top: 5px;
 
   &:hover, &:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
   }
 }
 
@@ -65,6 +141,7 @@
   color: red;
   font-weight: bold;
   margin-top: 10px;
+  text-align: center;
 }
 
 .content-wrapper {

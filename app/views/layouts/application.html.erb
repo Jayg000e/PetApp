@@ -1,159 +1,163 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>PetApp</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <head>
+        <title>G-PeTradise</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
 
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= javascript_importmap_tags %>
+    </head>
 
-    <%= javascript_importmap_tags %>
-  </head>
+    <body> 
+        <nav class="navbar navbar-light">
+            <ul>
+                <li>
+                    <a class="navbar-brand text-light" id="mypetLink" href="/render/users/pets">
+                        <img src="/images/mypet.png" width="20" height="20" class="d-inline-block align-top">
+                        &nbsp; My Pet
+                    </a> 
+                </li>
+                <li>
+                    <a class="navbar-brand text-light" id="marketLink" href="/render/market">
+                        <img src="/images/market.png" width="20" height="20" class="d-inline-block align-top">
+                        &nbsp; Market
+                    </a> 
+                </li>
+                <li>
+                    <a class="navbar-brand text-light" id="loginLink" href="#">
+                        <img src="/images/user.png" width="20" height="20" class="d-inline-block align-top">
+                        &nbsp; Login
+                    </a> 
+                </li>
+                <li id="loggedInMessageContainer"></li> <!-- Placeholder for the greeting message -->
+            </ul> 
+        </nav>
+ 
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <h1>Log In</h1>
+                <span class="close-btn">&times;</span>
+                <form id="loginForm">
+                    <input type="text" id="username" placeholder="Username">
+                    <input type="password" id="password" placeholder="Password">
+                    <input type="submit" value="submit">
+                </form>
 
-  <body>
-    <nav class="navbar">
-    <ul>
-        <li><a id="mypetLink" href="/render/users/pets">mypet</a></li>
-        <li><a id="marketLink" href="/render/market">market</a></li>
-        <li><a href="#" id="loginLink">Login</a></li>
-        <li id="loggedInMessageContainer"></li> <!-- Placeholder for the greeting message -->
-    </ul>
-</nav>
+                <div class="splt"></div>
+                <div class="footer">
+					<a id="signup" href="#">Create an Account</a>
+				</div>
+            </div>
+        </div>
 
+        <script>
+            $(document).ready(function() {
+                var BASE_URL = "<%= request.base_url %>";
 
+                updateNavBar();
+                setupEventListeners();
 
-    <div id="loginModal" class="modal">
-      <div class="modal-content">
-          <span class="close-btn">&times;</span>
-          <form id="loginForm">
-              <input type="text" id="username" placeholder="Username">
-              <input type="password" id="password" placeholder="Password">
-              <input type="submit" value="Log in">
-          </form>
-          
-      </div>
-    </div>
+                function setupEventListeners() {
+                    $("#loginLink").click(showLoginModal);
+                    $(".close-btn").click(hideLoginModal);
+                    $("#loginForm").submit(handleLoginFormSubmit);
+                    $(document).on("click", "#logoutLink", handleLogout); // Use event delegation to ensure the event is caught even for dynamically added elements
+                }
 
+                function showLoginModal(e) {
+                    e.preventDefault();
+                    $("#loginModal").show();
+                }
 
-    <script>
-        
-      $(document).ready(function() {
-          var BASE_URL = "<%= request.base_url %>";
+                function hideLoginModal() {
+                    $("#loginModal").hide();
+                    clearErrorMessages(); // Clear any error messages when closing modal
+                }
 
-          updateNavBar();
-          setupEventListeners();
+                function handleLoginFormSubmit(e) {
+                    e.preventDefault();
 
-          
+                    const username = $("#username").val();
+                    const password = $("#password").val();
 
-          
+                    $.ajax({
+                        type: "POST",
+                        url: BASE_URL+"/login",
+                        data: JSON.stringify({
+                            username: username,
+                            password: password
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: handleLoginSuccess,
+                        error: handleLoginError
+                    });
+                }
 
-          function setupEventListeners() {
-              $("#loginLink").click(showLoginModal);
-              $(".close-btn").click(hideLoginModal);
-              $("#loginForm").submit(handleLoginFormSubmit);
-              $(document).on("click", "#logoutLink", handleLogout); // Use event delegation to ensure the event is caught even for dynamically added elements
-          }
+                function handleLoginSuccess(response) {
+                    console.log(response);
+                    if (response.success) {
+                        hideLoginModal();
+                        localStorage.setItem('token', response.token);
+                        localStorage.setItem('username', response.username);
+                        localStorage.setItem('userid', response.userid);
+                        updateNavBar();
+                    } else {
+                        displayErrorMessage("Login failed. Please try again.");
+                    }
+                }
 
-          function showLoginModal(e) {
-              e.preventDefault();
-              $("#loginModal").show();
-          }
+                function handleLoginError() {
+                    displayErrorMessage("An error occurred. Please try again later.");
+                }
 
-          function hideLoginModal() {
-              $("#loginModal").hide();
-              clearErrorMessages(); // Clear any error messages when closing modal
-          }
+                function displayErrorMessage(message) {
+                    clearErrorMessages();
+                    $(".modal-content").append("<p class='error-msg'>" + message + "</p>");
+                }
 
-          function handleLoginFormSubmit(e) {
-              e.preventDefault();
+                function clearErrorMessages() {
+                    $(".modal-content .error-msg").remove();
+                }
 
-              const username = $("#username").val();
-              const password = $("#password").val();
+                function handleLogout(e) {
+                    e.preventDefault();
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("userid");
+                    updateNavBar();
+                }
 
-              $.ajax({
-                  type: "POST",
-                  url: BASE_URL+"/login",
-                  data: JSON.stringify({
-                      username: username,
-                      password: password
-                  }),
-                  contentType: "application/json",
-                  dataType: "json",
-                  success: handleLoginSuccess,
-                  error: handleLoginError
-              });
-          }
+                function updateNavBar() {
+                const username = localStorage.getItem('username');
+                const loggedInMessageContainer = $("#loggedInMessageContainer");
+            
+                if (localStorage.getItem('token') && username) {
+                    // User is logged in
+                    $("#loginLink").hide();
+                    
+                    // Insert greeting message
+                    loggedInMessageContainer.html('<a id="loggedInMessage" href="#">Dear ' + username + ', explore and enjoy!</a>');
+                    
+                    if (!$("#logoutLink").length) {
+                        $(".navbar ul").append('<li><a href="#" id="logoutLink">Logout</a></li>'); 
+                    }
+                } else {
+                    // User is not logged in
+                    $("#loginLink").show();
+                    $("#logoutLink").remove();
+                    loggedInMessageContainer.empty();
+                }
+            }
+        });
 
-          function handleLoginSuccess(response) {
-              console.log(response);
-              if (response.success) {
-                  hideLoginModal();
-                  localStorage.setItem('token', response.token);
-                  localStorage.setItem('username', response.username);
-                  localStorage.setItem('userid', response.userid);
-                  updateNavBar();
-              } else {
-                  displayErrorMessage("Login failed. Please try again.");
-              }
-          }
+        </script>
+        <%= yield %>
 
-          function handleLoginError() {
-              displayErrorMessage("An error occurred. Please try again later.");
-          }
-
-          function displayErrorMessage(message) {
-              clearErrorMessages();
-              $(".modal-content").append("<p class='error-msg'>" + message + "</p>");
-          }
-
-          function clearErrorMessages() {
-              $(".modal-content .error-msg").remove();
-          }
-
-          function handleLogout(e) {
-              e.preventDefault();
-              localStorage.removeItem("token");
-              localStorage.removeItem("username");
-              localStorage.removeItem("userid");
-              updateNavBar();
-          }
-
-          function updateNavBar() {
-    const username = localStorage.getItem('username');
-    const loggedInMessageContainer = $("#loggedInMessageContainer");
-    
-    if (localStorage.getItem('token') && username) {
-        // User is logged in
-        $("#loginLink").hide();
-        
-        // Insert greeting message
-        loggedInMessageContainer.html('<a id="loggedInMessage" href="#">Dear ' + username + ', you are logged in</a>');
-        
-        if (!$("#logoutLink").length) {
-            $(".navbar ul").append('<li><a href="#" id="logoutLink">Logout</a></li>');
-        }
-    } else {
-        // User is not logged in
-        $("#loginLink").show();
-        $("#logoutLink").remove();
-        loggedInMessageContainer.empty();
-    }
-}
-
-
-
-      });
-    </script>
-
-
-
-
-    
-
-    <%= yield %>
-  </body>
+    </body>
 </html>
 
 
