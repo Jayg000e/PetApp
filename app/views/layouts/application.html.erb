@@ -34,8 +34,36 @@
                 </li>
                 <li id="loggedInMessageContainer"></li> <!-- Placeholder for the greeting message -->
             </ul> 
+
+            <span class="navbar-text">
+                <img src="/images/shop.png" width="20" height="20" class="d-inline-block align-top">
+            </span>
         </nav>
- 
+
+        <header class="bgimg"> 
+        </header>
+
+        <div class="services" style="text-align: center;">
+            <div class="splt"></div>
+            <h1>Services</h1>
+            <div class="row">
+                <div class="column">
+                    <div class="card">
+                    <h2>Pet Activities</h2>
+                    <img src="/images/petbehavior.png" width=400 height=400>
+                    <p>Welcome to our intuitive pet behavior analysis service, where understanding your pet's unique personality and needs is our top priority. Through our user-friendly platform, you can input and track your pet's behaviors, from eating habits and exercise routines to social interactions and overall mood. Our advanced algorithm analyzes this data, providing you with valuable insights into your pet's emotional well-being and suggesting personalized tips and activities to ensure their happiness and comfort. By harnessing the power of data and behavioral science, we empower you to nurture a stronger bond with your furry companion and create an environment that supports their mental and emotional health. Join us in unlocking the secrets to your pet's happiness and well-being, as we embark on a journey of understanding and enriching the lives of our beloved animal friends.</p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                    <h2>Pet Shop</h2>
+                    <img src="/images/petshop.png" width=400 height=400>
+                    <p> Welcome to our heartwarming pet shop, a sanctuary for all things furry, feathered, and scaled. Step into our welcoming space, alive with the cheerful chirps of birds, the gentle purring of kittens, and the friendly wagging of tails. Explore our diverse collection of lovable companions, from playful puppies to graceful felines and everything in between. Our knowledgeable staff stands ready to guide you through the joyous journey of finding the perfect addition to your family. Whether you seek a loyal canine companion, a sociable parrot, or a tranquil fish for your home, our carefully nurtured and well-socialized pets are sure to steal your heart. Embrace the warmth and companionship that only a furry friend can offer as you embark on a memorable experience at our beloved pet shop. </p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
         <div id="loginModal" class="modal">
             <div class="modal-content">
                 <h1>Log In</h1>
@@ -138,6 +166,8 @@
                 if (localStorage.getItem('token') && username) {
                     // User is logged in
                     $("#loginLink").hide();
+                    $(".bgimg").hide();
+                    $(".services").hide();
                     
                     // Insert greeting message
                     loggedInMessageContainer.html('<a id="loggedInMessage" href="#">Dear ' + username + ', explore and enjoy!</a>');
@@ -148,6 +178,8 @@
                 } else {
                     // User is not logged in
                     $("#loginLink").show();
+                    $(".bgimg").show();
+                    $(".services").show();
                     $("#logoutLink").remove();
                     loggedInMessageContainer.empty();
                 }

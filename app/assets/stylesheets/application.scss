@@ -6,10 +6,56 @@ body, html {
 .bgimg {
   background-position: center;
   background-size: cover;
-  background-image: url("/images/bg.jpeg");
-  min-height: 75%;
+  background-image: url("/images/bg.png");
+  max-height: 70%;
+  height: 200vh; 
 }
 
+.petshop {
+  margin: 150px auto;
+  width: 70%
+
+  img {
+    max-width: 320px;
+    float:left;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    margin-right: 15px;
+  }
+}
+
+.services{
+  .splt{
+    height:1px;
+    margin:50px 50px 20px 50px;
+    background-color: silver;
+  }
+
+  .column {
+    width: 40%;
+    padding: 40px 60px;
+    margin: 0 auto;
+  
+    img {
+      margin: auto;
+      display: block;
+    }
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+    padding: 50px;
+    text-align: center;
+    background-color: #f1f1f1;
+  }
+}
+ 
 .menu {
   display: none;
 }
