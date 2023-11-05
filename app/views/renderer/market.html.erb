@@ -6,8 +6,9 @@
     <button type="submit">Submit</button>
 </form>
 <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
-<div id="my-container"></div>
 <div id="my-container2"></div>
+<div id="my-container"></div>
+
 
 
 <script>
@@ -25,8 +26,39 @@ $(document).ready(function() {
             breed: pet.breed,
             pet_type: pet.pet_type
         }));
-        console.log(category)
-        $('#my-container').html('<p>' + JSON.stringify(data) + '</p>');
+        function renderTable(data) {
+            
+            var table = `<table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Birthdate</th>
+                                    <th>Breed</th>
+                                    <th>Price</th>
+                                    <th>Owner</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+            data.forEach(function(pet) {
+                var ownerEmail = pet.owner_email ? pet.owner_email : "No Email";
+                table += `<tr>
+                            <td>${pet.name}</td>
+                            <td>${pet.pet_type}</td>
+                            <td>${pet.birthdate}</td>
+                            <td>${pet.breed}</td>
+                            <td>$${pet.price}</td>
+                            <td>${pet.owner_name}</td>
+                            <td>${ownerEmail}</td>
+                        </tr>`;
+            });
+
+            table += `</tbody></table>`;
+            return table;
+        }
+        $('#my-container').html(renderTable(data));
     },
     error: function() {
         console.error('Error fetching data.');
@@ -44,14 +76,14 @@ $(document).ready(function() {
 
         // Define consversation
         const consversation = [
-            {"role": "system", "content": "Return the answer as a JSON object.Do not choose an entry that is not in the json provided"},
+            {"role": "system", "content": "Your are an experience pet advisor. Do not choose an entry that is not in the json provided"},
             {"role": "user", "content": `Based on my preference: ${preference}, Choose 1 entries(with pet_type and breed) from: ${JSON.stringify(category)} that best suit me and give me the corresponding reason`},
         ]
         // Data to send in the request
         const requestData = {
             model: 'gpt-3.5-turbo',
             messages: consversation,
-            temperature: 0.7
+            temperature: 0.2
         };
 
         // Send the POST request to the OpenAI API

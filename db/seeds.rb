@@ -9,11 +9,11 @@
 # db/seeds.rb
 
 # Create Users
-user1 = User.create(username: 'user1', password: 'password1', role: 'admin')
-user2 = User.create(username: 'user2', password: 'password2', role: 'user')
-user3 = User.create(username: 'user3', password: 'password3', role: 'user')
-user4 = User.create(username: 'user4', password: 'password4', role: 'user')
-user5 = User.create(username: 'user5', password: 'password5', role: 'admin') 
+user1 = User.create(username: 'user1', password: 'password1', email: 'user1@example.com', role: 'admin')
+user2 = User.create(username: 'user2', password: 'password2', email: 'user2@example.com', role: 'user')
+user3 = User.create(username: 'user3', password: 'password3', email: 'user3@example.com', role: 'user')
+user4 = User.create(username: 'user4', password: 'password4', email: 'user4@example.com', role: 'user')
+user5 = User.create(username: 'user5', password: 'password5', email: 'user5@example.com', role: 'admin')
 
 # Create Pets
 pet1 = Pet.create(name: 'Pet1', pet_type: 'Dog', breed: 'Golden Retriever', birthdate: Date.new(2020, 1, 15), onsale: true, price: 500.0, user: user1)

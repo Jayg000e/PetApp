@@ -92,14 +92,14 @@
 
             // Define consversation
             const consversation = [
-                {"role": "system", "content": "Return the answer as a JSON object."},
+                {"role": "system", "content": "You are an expert in providing pet owner guidance."},
                 {"role": "user", "content": `Based on my pet's pet_type and breed: ${{pettype:petData.pet_type,breed:petData.breed}}, and its recent activities: ${activities},give me some advises on how to better train it`},
             ]
             // Data to send in the request
             const requestData = {
                 model: 'gpt-3.5-turbo',
                 messages: consversation,
-                temperature: 0.7
+                temperature: 0.2
             };
 
             // Send the POST request to the OpenAI API
