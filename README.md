@@ -3,7 +3,6 @@
 
 ## TODOs
 
-- UI
 - Cucumber test
 
 ## Dependencies
