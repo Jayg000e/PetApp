@@ -1,10 +1,6 @@
 # G-PeTradise: Test, Track, Trade
 
 
-## TODOs
-
-- Cucumber test
-
 ## Dependencies
 
 To get started, make sure to install Ruby version 3.1.4 using rbenv:
