@@ -14,13 +14,13 @@
     <body> 
         <nav class="navbar navbar-light">
             <ul>
-                <li>
+                <li class="login-required" title="Please Login first.">
                     <a class="navbar-brand text-light" id="mypetLink" href="/render/users/pets">
                         <img src="/images/mypet.png" width="20" height="20" class="d-inline-block align-top">
                         &nbsp; My Pet
                     </a> 
                 </li>
-                <li>
+                <li class="login-required" title="Please Login first.">
                     <a class="navbar-brand text-light" id="marketLink" href="/render/market">
                         <img src="/images/market.png" width="20" height="20" class="d-inline-block align-top">
                         &nbsp; Market
@@ -30,6 +30,12 @@
                     <a class="navbar-brand text-light" id="loginLink" href="#">
                         <img src="/images/user.png" width="20" height="20" class="d-inline-block align-top">
                         &nbsp; Login
+                    </a> 
+                </li>
+                <li>
+                    <a class="navbar-brand text-light" id="logoutLink" href="#">
+                        <img src="/images/user.png" width="20" height="20" class="d-inline-block align-top">
+                        &nbsp; Logout
                     </a> 
                 </li>
                 <li id="loggedInMessageContainer"></li> <!-- Placeholder for the greeting message -->
@@ -43,9 +49,12 @@
         <header class="bgimg"> 
         </header>
 
-        <div class="services" style="text-align: center;">
-            <div class="splt"></div>
-            <h1>Services</h1>
+        <div class="services title" >
+            <div class="title-header">          
+                <h2 class="title-name">Our Services</h2>
+                <span>Services</span>
+            </div>
+
             <div class="row">
                 <div class="column">
                     <div class="card">
@@ -64,6 +73,14 @@
             </div>
         </div>
 
+        <div class="main-content">
+            <%= yield %>
+        </div>
+
+        <div class="page-footer">
+            <p>&copy; 2023 G-PeTradise. All rights reserved.</p>
+        </div>
+
         <div id="loginModal" class="modal">
             <div class="modal-content">
                 <h1>Log In</h1>
@@ -75,7 +92,7 @@
                 </form>
 
                 <div class="splt"></div>
-                <div class="footer">
+                <div class="login-footer">
 					<a id="signup" href="#">Create an Account</a>
 				</div>
             </div>
@@ -160,34 +177,41 @@
                 }
 
                 function updateNavBar() {
-                const username = localStorage.getItem('username');
-                const loggedInMessageContainer = $("#loggedInMessageContainer");
-            
-                if (localStorage.getItem('token') && username) {
-                    // User is logged in
-                    $("#loginLink").hide();
-                    $(".bgimg").hide();
-                    $(".services").hide();
-                    
-                    // Insert greeting message
-                    loggedInMessageContainer.html('<a id="loggedInMessage" href="#">Dear ' + username + ', explore and enjoy!</a>');
-                    
-                    if (!$("#logoutLink").length) {
-                        $(".navbar ul").append('<li><a href="#" id="logoutLink">Logout</a></li>'); 
+                    const username = localStorage.getItem('username');
+                    const loggedInMessageContainer = $("#loggedInMessageContainer");
+                
+                    if (localStorage.getItem('token') && username) {
+                        // User is logged in
+                        $("#loginLink").hide();
+                        $(".bgimg").hide();
+                        $(".services").hide();
+
+                        $(".main-content").show();
+                        $("#logoutLink").show();
+                        
+                        // Insert greeting message
+                        loggedInMessageContainer.html('<a id="loggedInMessage" href="#">Dear ' + username + ', explore and enjoy!</a>');
+                        
+                        // login required items
+                        $(".login-required").attr("title", "")
+                    } else {
+                        // User is not logged in
+                        $("#loginLink").show();
+                        $(".bgimg").show();
+                        $(".services").show();
+                        
+                        $(".main-content").hide();
+                        $("#logoutLink").hide();
+                       
+                        loggedInMessageContainer.empty();
+
+                        // login required items
+                        $(".login-required").attr("title", "Please Login first.")
                     }
-                } else {
-                    // User is not logged in
-                    $("#loginLink").show();
-                    $(".bgimg").show();
-                    $(".services").show();
-                    $("#logoutLink").remove();
-                    loggedInMessageContainer.empty();
                 }
-            }
-        });
+            });
 
         </script>
-        <%= yield %>
 
     </body>
 </html>
