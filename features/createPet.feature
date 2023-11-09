@@ -1,6 +1,10 @@
-Feature: Testing createPet view
+Feature: User create a pet
 
   Scenario: User successfully create a pet
+    Given there are users with the following details:
+      | Username  | Password  | Role |
+      | user1     | password1 |      |
+    Given I have login
     Given I am on the createPet page
     When I fill in "Name" with "Fido"
     And I fill in "Pet Type" with "Dog"

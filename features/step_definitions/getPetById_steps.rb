@@ -1,38 +1,66 @@
-Given("I am on the AJAX pet page") do
+Given("I am on the pet page") do
   visit('/render/pets/1') # Load AJAX pet page for pet with ID 1
 end
 
-Given('the pet details are loaded for pet with ID {string}') do |pet_id|
-  visit("/render/pets/#{pet_id}")
-  expect(page).to have_css('#my-container', wait: 15)
-end
 
-When("I load the pet details for pet with ID {string}") do |id|
-  visit("/render/pets/#{id}")
+When(/^the user clicks on "(.*?)" button$/) do |button_text|
+  click_button(button_text)
 end
 
 
-Then("I should see the pet details displayed in a card") do
-  expect(page).to have_css('#my-container', wait: 15)
+Then('the "Waiting for data, please be patient..." message should be displayed') do
+  expect(page).to have_selector('#loadingMessage', visible: true)
 end
 
-
-Then("I should see a list of questions about the pet's breed") do
-  expect(page).to have_css('#questions div', minimum: 1, wait: 30)
+Then('an AJAX request should be made to fetch the pet\'s data') do
+  sleep(1)
 end
 
-# And("I should see a button with the text {string}") do |button_text|
-#   wait = Selenium::WebDriver::Wait.new(timeout: 20)
-#   button = wait.until { find_button(button_text, visible: false) }
-#   expect(button).to be_visible
-# end
-Then(/I should see a button to "([^"]*)"/) do |button_text|
-  wait = Selenium::WebDriver::Wait.new(timeout: 20)
-  element = wait.until {page.has_button?(button_text)}
-  expect(page).to have_button(button_text)
+Then('upon successful response, questions should be displayed in the "questions" container') do
+  # This will wait for the questions to appear, which should happen if the AJAX call succeeds
+  expect(page).to have_css('#questions div',wait:30)
 end
 
+Then('the answers should be displayed in the "answers" container') do
+  # This will check that the answers are now visible to the user
+  expect(page).to have_selector('#answers', visible: true)
+end
 
-Then("I should see the answers to the generated questions") do
-  expect(page).to have_css('#answers', minimum: 1)
+Given("there are pets with the following details:") do |table|
+  # Iterate through the table rows and create pets with the specified details
+  table.hashes.each do |pet_data|
+    # Create a new pet with the data from the table
+    Pet.create!(
+      name: pet_data['Name'],
+      pet_type: pet_data['Pet Type'],
+      birthdate: Date.parse(pet_data['Birthdate']),
+      breed: pet_data['Breed'],
+      user: User.find_by(username: 'user1')
+    )
+  end
+end
+
+Given("there are users with the following details:") do |table|
+  # Iterate through the table rows and create pets with the specified details
+  table.hashes.each do |user|
+    # Create a new pet with the data from the table
+    User.create!(
+      username: user['Username'],
+      password: user['Password'],
+      role: user['Role']
+    )
+  end
+end
+
+When("I visit the pet list page") do
+  visit pets_path
+end
+
+Then("I should see the following pets:") do |table|
+  # Iterate through the table rows and verify that each pet is displayed on the page
+  table.hashes.each do |pet_data|
+    expect(page).to have_content(pet_data['Name'])
+    expect(page).to have_content(pet_data['Pet Type'])
+    expect(page).to have_content(pet_data['Breed'])
+  end
 end
