@@ -6,16 +6,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
-    
 
+<body>
     <div class="container mt-4"> 
         <div id="my-container"></div>
     </div> 
 
     <div class="d-flex justify-content-center mt-4" style="margin-bottom: 100px;">
         <button id="create-pet-link" class="btn btn-primary" onclick="window.location.href='/render/users/pet';">
-            <img src="/images/add.png" alt="" style="width: 30px; height: 30px; margin-right: 10px;">
+            <img src="/images/add.png" alt="">
             Create a New Pet
         </button>
     </div>
@@ -47,7 +46,7 @@
                     success: function(data) {
                         var html = '';
                         $.each(data, function(index, val) {
-                            html += getPageHTML(val);
+                            html += getPetHTML(val);
                         });
                         $('#my-container').html(html);
                     },
@@ -61,7 +60,7 @@
             }
         }
         
-        function getPageHTML(val) {
+        function getPetHTML(val) {
             var petTemplate = [
                 ' <div class="my-pet">',
                 '     <div class="col-lg-11 item row">',
@@ -93,105 +92,6 @@
     </script>
 
     <style>
-        .my-pet {
-            margin-top: 120px;
-
-            .item {
-                position: relative;
-                margin-bottom: 30px;
-                padding-bottom: 30px;
-                border-bottom: 1px solid #D3D3D3;
-
-                .content h4 {
-                    font-size: 20px;
-                    margin-bottom: 5px;
-                }
-
-                .content span {
-                    font-size: 15px;
-                    color: #afafaf;
-                    display: block;
-                }
-
-                .content .view-pet {
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                }
-
-                .content .view-pet a {
-                    display: inline-block;
-                    padding: 10px 20px;
-                    background-color: #fff;
-                    color: #333; 
-                    text-decoration: none;
-                    font-size: 15px;
-                    font-weight: bold;
-                    border-radius: 10px;
-                    border: 3px solid #b98eff;  
-                    transition: background 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-                }
-
-                .content .view-pet a:hover {
-                    background: #b98eff; 
-                    color: #fff;  
-                    border-color: #e1c5ff;  
-                }
-
-                .content .view-pet-activities {
-                    text-align: center;
-                } 
-
-                .content .view-pet-activities a {
-                    color: #800080;
-                } 
-
-                .content p {
-                    margin: 18px 0px;
-                }
-
-                .content ul {
-                    border-top: 1px solid #eee;
-                    border-bottom: 1px solid #eee;
-                    padding: 15px 0px;
-                }
-
-                .content ul li {
-                    display: inline-block;
-                    width: 32%;
-                    color: #afafaf;
-                    font-size: 14px;
-                }
-
-                .content ul li:nth-child(2) {
-                    text-align: center;
-                }
-
-                .content ul li:last-child {
-                    text-align: right;
-                }
-
-                .content ul li i {
-                    margin-right: 5px;
-                    font-size: 16px;
-                }
-
-                .content .view-pet-activities {
-                    margin-top: 20px;
-                }
-            }
-
-            .item img {
-                border-radius: 23px;
-                width: 100px;
-                height: 100px;
-            }
-
-            .last-item {
-                border-bottom: none;
-            }
-        }         
-
         #create-pet-link {
             display: flex;
             align-items: center;
@@ -207,8 +107,8 @@
         }
         
         #create-pet-link img {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             margin-right: 10px;
         }
 

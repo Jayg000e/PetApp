@@ -7,18 +7,26 @@
     <%# <script src="https://cdn.jsdelivr.net/npm/openai@4.11.1/index.min.js"></script> %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <div class="container mt-4">
         <div id="my-container"></div>
-    </div>
-    <button id="generateButton">Check how well you know your pet!</button>
-    <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
-    <div id="responseContainer">
-      <div id="questions"></div>
-      <button id="answerButton" style="display: none;">View the answers</button>
-      <div id="answers" style="display: none;"></div>
-    </div>
 
+        <button id="generateButton">
+            <img src="/images/question.png" alt="">
+            Check how well you know your pet!
+        </button>
+        <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
+        <div id="responseContainer">
+            <div id="questions" style="display: none;"></div>
+            <button id="answerButton" style="display: none;">
+                <img src="/images/answer.png" alt="">
+                View the answers
+            </button>
+            <div id="answers" style="display: none;"></div>
+        </div>
+    </div>
+    
     <script>
         var petData;
         var petid = <%= @petid %>;
@@ -26,29 +34,18 @@
 
         var BASE_URL = "<%= request.base_url %>";
         $(document).ready(function() {
-            
-            
             $.ajax({
                 url: BASE_URL+'/pets/' + petid, // Example URL
                 method: 'GET',
                 dataType: 'json', // Expect JSON response
                 success: function(data) {
                     petData=data
-                    // Handle the JSON data here and render it on the page with Bootstrap styling
-                    var html = '<div class="card"><div class="card-body">';
-                    for (var key in data) {
-                        if (data.hasOwnProperty(key)) {
-                            html += '<p class="card-text"><strong>' + key + ':</strong> ' + data[key] + '</p>';
-                        }
-                    }
-                    html += '</div></div>';
-                    $('#my-container').html(html);
+                    $('#my-container').html(getPetHTML(data));
                 },
                 error: function() {
                     console.error('Error fetching data.');
                 }
             });
-
         
             $('#generateButton').click(function() {
                 
@@ -62,6 +59,7 @@
                     {"role": "system", "content": "Return the answer as a JSON object."},
                     {"role": "user", "content": `Ask me problems of ${petData.breed} and provide corresponding answer. Return an array of questions and an array of answers in a JSON object.`},
                 ]
+
                 // Data to send in the request
                 const requestData = {
                     model: 'gpt-3.5-turbo',
@@ -74,8 +72,8 @@
                     type: 'POST',
                     url: apiUrl,
                     headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
                     },
                     data: JSON.stringify(requestData),
                     success: function(data) {
@@ -94,27 +92,102 @@
                         answersDiv.empty(); // Clear any previous content
 
                         jsonResponse.questions.forEach((question, index) => {
-                        const questionElement = $('<div>').text(`Question ${index + 1}: ${question}`);
-                        questionsDiv.append(questionElement);
+                            const questionElement = $('<div>').text(`Question ${index + 1}: ${question}`);
+                            questionsDiv.append(questionElement);
                         });
 
                         jsonResponse.answers.forEach((answer, index) => {
-                        const answerElement = $('<div>').text(`Answer ${index + 1}: ${answer}`);
-                        answersDiv.append(answerElement);
+                            const answerElement = $('<div>').text(`Answer ${index + 1}: ${answer}`);
+                            answersDiv.append(answerElement);
                         });
+
+                        $('#questions').show()
                         $('#answerButton').show()
                     },
                     error: function(xhr, status, error) {
-                    console.error('Error:', error);
+                        console.error('Error:', error);
                     }
                 });
-
             });
+
             $('#answerButton').click(function(){
                 $('#answers').show();
             })
-
         });
+
+        function getPetHTML(val) {
+            var petTemplate = [
+                ' <div class="my-pet">',
+                '     <div class="col-lg-11 item row">',
+                '         <div class="col-lg-2 col-sm-5">',
+                '             <img src="/images/' + (val.pet_type.toLowerCase() == 'dog' ? 'dog' : (val.pet_type.toLowerCase() == 'cat' ? 'cat' : 'others')) + '.png" alt="">',
+                '         </div>', 
+                '         <div class="col-lg-10 col-sm-7 content">',
+                '             <h4>name: ' + val.name + '</h4>',
+                '             <span>onsale: ' + val.onsale + '</span>',
+                '             <span>create_at: ' + val.created_at + '</span>',
+                '             <p>Meet ' + val.name + ', a furry bundle of joy and loyalty. With his soulful eyes and wagging tail, he has a way of melting hearts and bringing smiles to everyone he meets. This delightful ' + val.breed + ' possesses a charming blend of playfulness and calmness, making him the perfect companion for both spirited adventures and cozy nights in.</p>',
+                '             <ul class="info">',
+                '                 <li>pet_type: ' + val.pet_type + '</li>',
+                '                 <li>breed: ' + val.breed + '</li>',
+                '                 <li>birthdate: ' + val.birthdate + '</li>',
+                '             </ul>',
+                '         </div>',
+                '     </div>',
+                ' </div>',
+            ]
+            return petTemplate.join('');
+        }
+
     </script>
+        
+    <style>
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 3px solid #b98eff;
+            border-radius: 10px;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: linear-gradient(to left, rgba(185, 142, 255, 0.8), rgba(225, 197, 255, 0.8));
+            color: #333;
+            border-color: #e1c5ff;
+        }
+
+        #loadingMessage {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px; /* Adjust the margin as needed */
+        }
+
+        .container #responseContainer #questions, #answers {
+            background-color: #f0f0f0; /* Light gray background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            color: #333; /* Dark text color */
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 50px;
+        } 
+
+    </style>
 </body>
 </html>
