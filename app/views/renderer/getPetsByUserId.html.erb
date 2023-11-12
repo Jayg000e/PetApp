@@ -3,69 +3,221 @@
 <head>
     <title>AJAX Example</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div class="container mt-4">
+    
+
+    <div class="container mt-4"> 
         <div id="my-container"></div>
     </div> 
-    <div class="d-flex justify-content-center mt-4">
-        <button id="create-pet-link" class="btn btn-primary" onclick="window.location.href='/render/users/pet';">Create a New Pet</button>
+
+    <div class="d-flex justify-content-center mt-4" style="margin-bottom: 100px;">
+        <button id="create-pet-link" class="btn btn-primary" onclick="window.location.href='/render/users/pet';">
+            <img src="/images/add.png" alt="" style="width: 30px; height: 30px; margin-right: 10px;">
+            Create a New Pet
+        </button>
     </div>
-
-
     
     <script>
-    var BASE_URL = "<%= request.base_url %>";
-    $(document).ready(function() {
-    
-    var userid = localStorage.getItem('userid');
-    console.log(BASE_URL)
-    console.log(BASE_URL+'/pets/user/' + userid)
-    updatePage(userid);
-    
-    setInterval(function() {
-        var currentUserId = localStorage.getItem('userid');
-        if (userid !== currentUserId) {
-            userid = currentUserId;
+        var BASE_URL = "<%= request.base_url %>";
+        $(document).ready(function() {
+            var userid = localStorage.getItem('userid');
+            console.log(BASE_URL)
+            console.log(BASE_URL+'/pets/user/' + userid)
             updatePage(userid);
-        }
-    }, 1000); // Check every second
-});
-
-    function updatePage(userid) {
-        if (userid) {
-            $('#create-pet-link').show();
-            $.ajax({
-                url: BASE_URL+'/pets/user/' + userid,
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var html = '';
-                    $.each(data, function(index, val) {
-                        html += '<div class="card"><div class="card-body">';
-                        for (var key in val) {
-                            if (val.hasOwnProperty(key)) {
-                                html += '<p class="card-text"><strong>' + key + ':</strong> ' + val[key] + '</p>';
-                            }
-                        } 
-                        html += '<a href="/render/pets/' + val.id + '" class="btn btn-primary mr-2">View Pet</a>';
-                        html += '<a href="/render/pets/' + val.id +'/activities'+'" class="btn btn-primary">View Pet Activities</a>';
-
-                        html += '</div></div>';
-                    });
-                    $('#my-container').html(html);
-                },
-                error: function() {
-                    console.error('Error fetching data.');
+            
+            setInterval(function() {
+                var currentUserId = localStorage.getItem('userid');
+                if (userid !== currentUserId) {
+                    userid = currentUserId;
+                    updatePage(userid);
                 }
-            });
-        } else {
-            $('#create-pet-link').hide();
-            // $('#my-container').html('<p>Please login to view your pets.</p>');
-        }
-    }
+            }, 1000); // Check every second
+        });
 
-</script>
+        function updatePage(userid) {
+            if (userid) {
+                $('#create-pet-link').show();
+                $.ajax({
+                    url: BASE_URL+'/pets/user/' + userid,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var html = '';
+                        $.each(data, function(index, val) {
+                            html += getPageHTML(val);
+                        });
+                        $('#my-container').html(html);
+                    },
+                    error: function() {
+                        console.error('Error fetching data.');
+                    }
+                });
+            } else {
+                $('#create-pet-link').hide();
+                // $('#my-container').html('<p>Please login to view your pets.</p>');
+            }
+        }
+        
+        function getPageHTML(val) {
+            var petTemplate = [
+                ' <div class="my-pet">',
+                '     <div class="col-lg-11 item row">',
+                '         <div class="col-lg-2 col-sm-5">',
+                '             <img src="/images/' + (val.pet_type.toLowerCase() == 'dog' ? 'dog' : (val.pet_type.toLowerCase() == 'cat' ? 'cat' : 'others')) + '.png" alt="">',
+                '         </div>', 
+                '         <div class="col-lg-10 col-sm-7 content">',
+                '             <h4>name: ' + val.name + '</h4>',
+                '             <span>onsale: ' + val.onsale + '</span>',
+                '             <span>create_at: ' + val.created_at + '</span>',
+                '             <div class="view-pet">',
+                '                 <a href="/render/pets/' + val.id +'">View Pet</a>',
+                '             </div>',
+                '             <p>Meet ' + val.name + ', a furry bundle of joy and loyalty. With his soulful eyes and wagging tail, he has a way of melting hearts and bringing smiles to everyone he meets. This delightful ' + val.breed + ' possesses a charming blend of playfulness and calmness, making him the perfect companion for both spirited adventures and cozy nights in.</p>',
+                '             <ul class="info">',
+                '                 <li>pet_type: ' + val.pet_type + '</li>',
+                '                 <li>breed: ' + val.breed + '</li>',
+                '                 <li>birthdate: ' + val.birthdate + '</li>',
+                '             </ul>',
+                '             <div class="view-pet-activities">',
+                '                 <a href="/render/pets/' + val.id + '/activities">View Pet Activities</a>',
+                '             </div>',
+                '         </div>',
+                '     </div>',
+                ' </div>',
+            ]
+            return petTemplate.join('');
+        }
+    </script>
+
+    <style>
+        .my-pet {
+            margin-top: 120px;
+
+            .item {
+                position: relative;
+                margin-bottom: 30px;
+                padding-bottom: 30px;
+                border-bottom: 1px solid #D3D3D3;
+
+                .content h4 {
+                    font-size: 20px;
+                    margin-bottom: 5px;
+                }
+
+                .content span {
+                    font-size: 15px;
+                    color: #afafaf;
+                    display: block;
+                }
+
+                .content .view-pet {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+
+                .content .view-pet a {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #fff;
+                    color: #333; 
+                    text-decoration: none;
+                    font-size: 15px;
+                    font-weight: bold;
+                    border-radius: 10px;
+                    border: 3px solid #b98eff;  
+                    transition: background 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+                }
+
+                .content .view-pet a:hover {
+                    background: #b98eff; 
+                    color: #fff;  
+                    border-color: #e1c5ff;  
+                }
+
+                .content .view-pet-activities {
+                    text-align: center;
+                } 
+
+                .content .view-pet-activities a {
+                    color: #800080;
+                } 
+
+                .content p {
+                    margin: 18px 0px;
+                }
+
+                .content ul {
+                    border-top: 1px solid #eee;
+                    border-bottom: 1px solid #eee;
+                    padding: 15px 0px;
+                }
+
+                .content ul li {
+                    display: inline-block;
+                    width: 32%;
+                    color: #afafaf;
+                    font-size: 14px;
+                }
+
+                .content ul li:nth-child(2) {
+                    text-align: center;
+                }
+
+                .content ul li:last-child {
+                    text-align: right;
+                }
+
+                .content ul li i {
+                    margin-right: 5px;
+                    font-size: 16px;
+                }
+
+                .content .view-pet-activities {
+                    margin-top: 20px;
+                }
+            }
+
+            .item img {
+                border-radius: 23px;
+                width: 100px;
+                height: 100px;
+            }
+
+            .last-item {
+                border-bottom: none;
+            }
+        }         
+
+        #create-pet-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 3px solid #b98eff;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        
+        #create-pet-link img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        #create-pet-link:hover {
+            background: linear-gradient(to left, rgba(185, 142, 255, 0.8), rgba(225, 197, 255, 0.8));
+            color: #333;
+            border-color: #e1c5ff;
+        }
+    </style>
+
 </body>
 </html>
