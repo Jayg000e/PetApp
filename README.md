@@ -99,7 +99,7 @@ For the deployed version of our application, visit our Heroku link at: https://a
 
    ![Market](images/Market.png)
 
-8. **Get Purchasing Advices**: To get purchasing advices based on your preferences, enter your preferences and click on "submit" and wait for approximately 30 seconds. You will then be advised on which pet best suits you in the market:
+9. **Get Purchasing Advices**: To get purchasing advices based on your preferences, enter your preferences and click on "submit" and wait for approximately 30 seconds. You will then be advised on which pet best suits you in the market:
 
    ![Purchasing advices](images/Purchase.png)
 
