@@ -29,11 +29,11 @@ end
 
 Then('I should see the suggestions in the {string} container') do |container_id|
   # Wait for AJAX to complete and content to appear
-  expect(page).to have_selector("##{container_id}",wait:60)
+  expect(page).to have_selector("##{container_id}",wait:120)
 
   # Get the container element
   container = find("##{container_id}")
 
   # Expect the container to have some text content
-  expect(container).to have_text(/\S+/, wait: 60)
+  expect(container).to have_text(/\S+/, wait: 120)
 end

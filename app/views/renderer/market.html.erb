@@ -16,6 +16,7 @@ var BASE_URL = "<%= request.base_url %>";
 var apiKey = "<%= @apiKey %>";
 var category;
 $(document).ready(function() {
+    localStorage.getItem('token')
     $.ajax({
     url: BASE_URL+'/onsale', // Example URL
     method: 'GET',

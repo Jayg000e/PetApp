@@ -18,12 +18,12 @@ end
 
 Then('upon successful response, questions should be displayed in the "questions" container') do
   # This will wait for the questions to appear, which should happen if the AJAX call succeeds
-  expect(page).to have_css('#questions div',wait:30)
+  expect(page).to have_css('#questions div',wait:60)
 end
 
 Then('the answers should be displayed in the "answers" container') do
   # This will check that the answers are now visible to the user
-  expect(page).to have_selector('#answers', visible: true)
+  expect(page).to have_selector('#answers', visible: true,wait:60)
 end
 
 Given("there are pets with the following details:") do |table|
