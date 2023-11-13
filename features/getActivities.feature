@@ -12,6 +12,7 @@ Feature: Get suggestions according to the pets' activities by GPT
             | Content                  | Pet  |
             | He eats a lot these days | Fido | 
             | He is not friendly       | Fido |
+        Given I have login
         When I visit the activity page
         Then I should see the following activities:
             | Content                      | Pet  |

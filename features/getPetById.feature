@@ -8,6 +8,7 @@ Feature: Generate Pet Questions and Answers by GPT
         | Name      | Pet Type | Birthdate  | Breed            |
         | Fido      | Dog      | 2019-05-10 | Golden Retriever |
         | Whiskers  | Cat      | 2020-02-15 | Siamese          |
+    Given I have login
     Given I am on the pet page
     When the user clicks on "Check how well you know your pet!" button
     Then the "Waiting for data, please be patient..." message should be displayed

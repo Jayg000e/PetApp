@@ -8,6 +8,7 @@ Feature: User create activity for a pet
       | Name      | Pet Type | Birthdate  | Breed            |
       | Fido      | Dog      | 2019-05-10 | Golden Retriever |
       | Whiskers  | Cat      | 2020-02-15 | Siamese          |
+    Given I have login
     Given I am on the createActivity page for pet 1
     When I fill in "Enter activity content..." with "Sample Activity"
     And I click the "Create Activity" button
