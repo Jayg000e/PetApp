@@ -95,8 +95,21 @@
 
                 <div class="splt"></div>
                 <div class="login-footer">
-					<a id="signup" href="/render/users">Create an Account</a>
+					<a id="signup" href="#">Create an Account</a>
 				</div>
+            </div>
+        </div>
+
+        <div id="createAccountModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h1>Create Account</h1>
+                <span class="close-btn">&times;</span>
+                <form id="createAccountForm">
+                    <input type="text" id="newUsername" placeholder="Username" required>
+                    <input type="password" id="newPassword" placeholder="Password" required>
+                    <input type="email" id="newEmail" placeholder="Email" required>
+                    <input type="submit" value="Create Account">
+                </form>
             </div>
         </div>
 
@@ -106,6 +119,46 @@
 
                 updateNavBar();
                 setupEventListeners();
+                
+                $("#signup").click(function(e) {
+                    e.preventDefault();
+                    $("#loginModal").hide(); // Hide the login modal
+                    $("#createAccountModal").show(); // Show the create account modal
+                });
+
+                // Close Create Account Modal
+                $("#createAccountModal .close-btn").click(function() {
+                    $("#createAccountModal").hide();
+                });
+
+                $('#createAccountForm').submit(function(e) {
+                    e.preventDefault();
+
+                    var data = {
+                        username: $('#newUsername').val(),
+                        password: $('#newPassword').val(),
+                        email: $('#newEmail').val(),
+                    };
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: BASE_URL + '/users', 
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify({ user: data }),
+                        success: function(response) {
+                            alert('User created successfully!');
+                            console.log(response);
+
+                            window.location.href = "/";
+                            // Close the create account modal
+                            $('#createAccountModal').hide();
+                        },
+                        error: function(response) {
+                            alert('Error creating user. ' + response.responseText);
+                            console.log(response);
+                        }
+                    });
+                });
 
                 function setupEventListeners() {
                     $("#loginLink").click(showLoginModal);
