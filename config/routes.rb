@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
 
 
-  resources :pets
+  resources :pets do
+    member do
+      patch 'put_onsale'
+      patch 'put_offsale'
+    end
+  end
   resources :activities
   resources :users
 

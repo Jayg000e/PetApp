@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create]
+  skip_before_action :verify_authenticity_token, only: [:create,:put_offsale,:put_onsale]
 
   def index
     @pets = Pet.all
@@ -40,6 +40,39 @@ class PetsController < ApplicationController
       render json: { error: pet.errors.full_messages.join(', ') }, status: :unprocessable_entity
     end
   end
+
+  # PATCH /pets/:id/put_onsale
+  def put_onsale
+    @pet = Pet.find(params[:id])
+
+    # Update the onsale status and price
+    @pet.onsale = true
+    @pet.price = params[:price] if params[:price]
+
+    if @pet.save
+      render json: @pet, status: :ok
+    else
+      render json: { error: @pet.errors.full_messages.join(', ') }, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH /pets/:id/put_offsale
+  def put_offsale
+    @pet = Pet.find(params[:id])
+
+    # Update the onsale status
+    @pet.onsale = false
+
+    @pet.price = nil
+
+    if @pet.save
+      render json: @pet, status: :ok
+    else
+      render json: { error: @pet.errors.full_messages.join(', ') }, status: :unprocessable_entity
+    end
+  end
+
+
 
   private
   def pet_params
