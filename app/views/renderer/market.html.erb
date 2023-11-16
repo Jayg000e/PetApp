@@ -8,7 +8,7 @@
 <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
 <div id="my-container2"></div>
 <div id="my-container"></div>
-
+<a href="mailto:jg4692@columbia.edu">Test Email Link</a>
 
 
 <script>
@@ -30,42 +30,58 @@ $(document).ready(function() {
             pet_type: pet.pet_type
         }));
         function renderTable(data) {
-            
-            var table = `<table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Birthdate</th>
-                                    <th>Breed</th>
-                                    <th>Price</th>
-                                    <th>Owner</th>
-                                    <th>Email</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
+            var $table = $('<table>').addClass('table table-striped');
+            var $thead = $('<thead>').append(`
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Birthdate</th>
+                    <th>Breed</th>
+                    <th>Price</th>
+                    <th>Owner</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                </tr>
+            `);
+            var $tbody = $('<tbody>');
 
             data.forEach(function(pet) {
                 var ownerEmail = pet.owner_email ? pet.owner_email : "No Email";
-                table += `<tr>
-                            <td>${pet.name}</td>
-                            <td>${pet.pet_type}</td>
-                            <td>${pet.birthdate}</td>
-                            <td>${pet.breed}</td>
-                            <td>$${pet.price}</td>
-                            <td>${pet.owner_name}</td>
-                            <td>${ownerEmail}</td>
-                        </tr>`;
+                var $row = $(`
+                    <tr>
+                        <td>${pet.name}</td>
+                        <td>${pet.pet_type}</td>
+                        <td>${pet.birthdate}</td>
+                        <td>${pet.breed}</td>
+                        <td>$${pet.price}</td>
+                        <td>${pet.owner_name}</td>
+                        <td>${ownerEmail}</td>
+                        <td><button class="contact-btn" data-email="${ownerEmail}">Contact</button></td>
+                    </tr>
+                `);
+                $tbody.append($row);
             });
 
-            table += `</tbody></table>`;
-            return table;
+            $table.append($thead).append($tbody);
+            $('#my-container').html($table);
         }
+
         $('#my-container').html(renderTable(data));
     },
     error: function() {
         console.error('Error fetching data.');
     }
+    });
+
+    $(document).on('click', '.contact-btn', function() {
+        var email = $(this).data('email');
+        console.log(email);
+        if (email !== "No Email") {
+            // Open email client
+            window.location.href = `mailto:${email}`;
+        } else {
+            alert('Email not available for this entry.');
+        }
     });
 
     $('#myForm').on('submit', function(e) {
