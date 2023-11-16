@@ -72,7 +72,11 @@ class PetsController < ApplicationController
     end
   end
 
-
+  # delete pet: /pets/:id (delete)
+  def destroy
+    @pet = Pet.find(params[:id])
+    @pet.destroy
+  end
 
   private
   def pet_params
