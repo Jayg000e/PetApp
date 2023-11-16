@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:create]
+    skip_before_action :verify_authenticity_token, only: [:create,:destroy]
 
     def index
         @activities = Activity.all
@@ -31,6 +31,12 @@ class ActivitiesController < ApplicationController
       else
         render json: { error: activity.errors.full_messages.join(', ') }, status: :unprocessable_entity
       end
+    end
+
+    # delete activity: /activities/:id (delete)
+    def destroy
+      @activity = Activity.find(params[:id])
+      @activity.destroy
     end
 
     private

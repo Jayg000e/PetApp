@@ -163,7 +163,7 @@
                 dataType: 'json',
                 success: function(data) {
                     alert('Pet deleted successfully.');
-                    updatePage(localStorage.getItem('userid')); // Refresh the pets listing
+                    window.location.href = '/render/users/pets'; // Refresh the pets listing
                 },
                 error: function() {
                     alert('Error deleting pet.');
