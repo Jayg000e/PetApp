@@ -87,6 +87,7 @@ class PetsController < ApplicationController
       "breed",
       "onsale",
       "price",
+      "description",
       "user_id") # Adjust as needed
   end
 end

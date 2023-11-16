@@ -19,6 +19,9 @@
   
   <label for="breed">Breed:</label><br>
   <input type="text" id="breed" name="breed"><br>
+
+  <label for="description">Description:</label><br>
+  <input type="text" id="description" name="description"><br>
   
   <button type="button" onclick="createPet()">Create Pet</button>
 </form>
@@ -31,8 +34,7 @@ function createPet() {
     pet_type: $('#pet_type').val(),
     birthdate: $('#birthdate').val(),
     breed: $('#breed').val(),
-    onsale: $('#onsale').is(':checked'),
-    price: $('#price').val(),
+    description: $('#description').val(),
     user_id: localStorage.userid
   };
   

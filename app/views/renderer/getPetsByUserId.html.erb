@@ -48,6 +48,7 @@
                     dataType: 'json',
                     success: function(data) {
                         var html = '';
+                        console.log(data);
                         $.each(data, function(index, val) {
                             html += getPetHTML(val);
                         });
@@ -85,7 +86,7 @@
                 '                     <button type="submit" class="btn btn-primary">Update Price</button>',
                 '                 </form>',
                 '             </div>',
-                '             <p>Meet ' + val.name + ', a furry bundle of joy and loyalty. With his soulful eyes and wagging tail, he has a way of melting hearts and bringing smiles to everyone he meets. This delightful ' + val.breed + ' possesses a charming blend of playfulness and calmness, making him the perfect companion for both spirited adventures and cozy nights in.</p>',
+                '             <p>' + val.description + '</p>',
                 '             <ul class="info">',
                 '                 <li>pet_type: ' + val.pet_type + '</li>',
                 '                 <li>breed: ' + val.breed + '</li>',

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_170407) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_16_175710) do
   create_table "activities", force: :cascade do |t|
     t.string "content"
     t.integer "pet_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_170407) do
     t.boolean "onsale"
     t.float "price"
     t.integer "user_id"
+    t.text "description"
     t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
