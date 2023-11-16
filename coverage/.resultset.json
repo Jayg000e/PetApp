@@ -1,7 +1,7 @@
 {
   "Cucumber": {
     "coverage": {
-      "/home/jayg/Desktop/PetApp/app/models/user.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -12,14 +12,14 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/application_record.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/pet.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/pet.rb": {
         "lines": [
           1,
           1,
@@ -29,7 +29,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/renderer_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/renderer_controller.rb": {
         "lines": [
           1,
           1,
@@ -68,37 +68,37 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/application_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/application_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/activities_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/activities_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/pets_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/pets_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/renderer_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/renderer_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/users_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/users_controller.rb": {
         "lines": [
           1,
           1,
@@ -212,7 +212,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/activities_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/activities_controller.rb": {
         "lines": [
           1,
           1,
@@ -260,7 +260,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/activity.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/activity.rb": {
         "lines": [
           1,
           1,
@@ -269,7 +269,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/pets_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/pets_controller.rb": {
         "lines": [
           1,
           1,
@@ -329,89 +329,35 @@
         ]
       }
     },
-    "timestamp": 1699849165
+    "timestamp": 1699854803
   },
   "RSpec": {
     "coverage": {
-      "/home/jayg/Desktop/PetApp/app/helpers/activities_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/activities_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/application_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/pets_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/pets_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/helpers/renderer_helper.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/helpers/renderer_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/activities_controller.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          null,
-          2,
-          2,
-          null,
-          2,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
-          2,
-          null,
-          2,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
-          null,
-          1,
-          2,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/home/jayg/Desktop/PetApp/app/controllers/application_controller.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/home/jayg/Desktop/PetApp/app/controllers/pets_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/activities_controller.rb": {
         "lines": [
           1,
           1,
@@ -428,6 +374,60 @@
           null,
           1,
           null,
+          2,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/pets_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
           1,
           null,
           1,
@@ -470,7 +470,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/users_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/users_controller.rb": {
         "lines": [
           1,
           1,
@@ -584,7 +584,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/activity.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/activity.rb": {
         "lines": [
           1,
           1,
@@ -593,14 +593,14 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/application_record.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/pet.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/pet.rb": {
         "lines": [
           1,
           1,
@@ -610,7 +610,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/models/user.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -621,7 +621,7 @@
           null
         ]
       },
-      "/home/jayg/Desktop/PetApp/app/controllers/renderer_controller.rb": {
+      "/home/jayg/Desktop/4152/PetApp/app/controllers/renderer_controller.rb": {
         "lines": [
           1,
           1,
@@ -644,6 +644,10 @@
           null,
           null,
           1,
+          0,
+          null,
+          null,
+          1,
           1,
           null,
           null,
@@ -655,12 +659,16 @@
           1,
           1,
           1,
+          null,
+          null,
+          1,
+          0,
           null,
           null,
           null
         ]
       }
     },
-    "timestamp": 1699849851
+    "timestamp": 1700120112
   }
 }

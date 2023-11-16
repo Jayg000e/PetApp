@@ -18,6 +18,10 @@ class RendererController < ApplicationController
     render 'getPetsByUserId'
   end
 
+  def createUser
+    render 'createUser'
+  end
+
   def createPet
     render 'createPet'
   end
@@ -30,6 +34,10 @@ class RendererController < ApplicationController
   def market
     @apiKey=Rails.application.credentials[:api_key]
     render 'market'
+  end
+
+  def home
+    render 'home'
   end
 
 end

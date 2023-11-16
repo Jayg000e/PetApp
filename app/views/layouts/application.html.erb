@@ -45,7 +45,7 @@
                 <img src="/images/shop.png" width="20" height="20" class="d-inline-block align-top">
             </span>
         </nav>
-
+        <%= yield %>
         <header class="bgimg"> 
         </header>
 
@@ -73,9 +73,11 @@
             </div>
         </div>
 
-        <div class="main-content">
-            <%= yield %>
-        </div>
+        <%# <div class="main-content">
+            
+        </div> %>
+
+        
 
         <div class="page-footer">
             <p>&copy; 2023 G-PeTradise. All rights reserved.</p>
@@ -93,7 +95,7 @@
 
                 <div class="splt"></div>
                 <div class="login-footer">
-					<a id="signup" href="#">Create an Account</a>
+					<a id="signup" href="/render/users">Create an Account</a>
 				</div>
             </div>
         </div>
@@ -182,12 +184,13 @@
                 
                     if (localStorage.getItem('token') && username) {
                         // User is logged in
-
+                        $('#marketLink').attr('href', '/render/market');
+                        $('#mypetLink').attr('href', '/render/users/pets');
                         $("#loginLink").hide();
                         $(".bgimg").hide();
                         $(".services").hide();
-
-                        $(".main-content").show();
+                        
+                        // $(".main-content").show();
                         $("#logoutLink").show();
                         
                         // Insert greeting message
@@ -197,11 +200,13 @@
                         $(".login-required").attr("title", "")
                     } else {
                         // User is not logged in
+                        $('#marketLink').attr('href', '/');
+                        $('#mypetLink').attr('href', '/');
                         $("#loginLink").show();
                         $(".bgimg").show();
                         $(".services").show();
                         
-                        $(".main-content").hide();
+                        // $(".main-content").hide();
                         $("#logoutLink").hide();
                        
                         loggedInMessageContainer.empty();

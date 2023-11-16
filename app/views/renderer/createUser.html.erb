@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Create User</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Create User</h1>
+
+<form id="create_pet_form">
+  <label for="username">UserName:</label><br>
+  <input type="text" id="username" name="username"><br>
+  
+  <label for="password">password:</label><br>
+  <input type="password" id="password" name="password"><br>
+  
+  <label for="email">Email:</label><br>
+  <input type="text" id="email" name="email"><br>
+  
+  <button type="button" onclick="createUser()">Register</button>
+</form>
+
+<script>
+  var BASE_URL = "<%= request.base_url %>";
+function createUser() {
+  var data = {
+    username: $('#username').val(),
+    password: $('#password').val(),
+    email: $('#email').val(),
+  };
+  
+  $.ajax({
+    type: 'POST',
+    url: BASE_URL+'/users',
+    contentType: 'application/json;charset=UTF-8',
+    data: JSON.stringify({ user: data }),
+    success: function(response) {
+      alert('User created successfully!');
+      console.log(response);
+      window.location.href = BASE_URL;
+    },
+    error: function(response) {
+      alert('Error creating user.');
+      console.log(response);
+    }
+  });
+}
+</script>
+
+</body>
+

@@ -20,6 +20,9 @@
     </div>
     
     <script>
+        if (!localStorage.getItem('username')) {
+            window.location.href = '/';
+        }
         var BASE_URL = "<%= request.base_url %>";
         $(document).ready(function() {
             var userid = localStorage.getItem('userid');
