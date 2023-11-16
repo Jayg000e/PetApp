@@ -152,6 +152,7 @@
                         localStorage.setItem('username', response.username);
                         localStorage.setItem('userid', response.userid);
                         updateNavBar();
+                        window.location.href = '/render/users/pets';
                     } else {
                         displayErrorMessage("Login failed. Please try again.");
                     }
@@ -176,6 +177,7 @@
                     localStorage.removeItem("username");
                     localStorage.removeItem("userid");
                     updateNavBar();
+                    window.location.href = '/';
                 }
 
                 function updateNavBar() {
