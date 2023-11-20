@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>AJAX Example</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -7,272 +8,331 @@
     <%# <script src="https://cdn.jsdelivr.net/npm/openai@4.11.1/index.min.js"></script> %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <div class="container mt-4">
-        <div id="my-container2"></div>
-    </div>
-    <div class="container mt-4">
-        <div id="my-container"></div>
-    </div>
-    <button id="generateButton">Get some advice to better train your pet</button>
-    <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
-    <div id="my-container3"></div>
+        <div class="container mt-4">
+            <button id="createActivityButton" style="margin-right:150px;float: right;">Create a New Activity</button>
+        </div>
 
-    <div class="container mt-4">
-        <button id="createActivityButton" class="btn btn-primary">Create a New Activity</button>
+        <div id="my-container2"></div> 
+        <div id="my-container"></div>
+
+        <button id="generateButton">Get some advice to better train your pet</button>
+        <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
+        <div id="my-container3"></div>
     </div>
 
     <!-- Activity Creation Modal -->
-    <div class="modal fade" id="createActivityModal" tabindex="-1" role="dialog" aria-labelledby="createActivityModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="createActivityModalLabel">New Activity</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
+    <div class="modal fade" id="createActivityModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-content" >
+            <h1>New Activity</h1>
+            <span class="close-btn">&times;</span>  
             <form id="createActivityForm">
-            <div class="form-group">
-                <label for="activity-content" class="col-form-label">Activity Content:</label>
-                <textarea class="form-control" id="activity-content" name="content" required></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Create Activity</button>
-            </div>
+                <div class="form-group">
+                    <label for="activity-content" class="col-form-label">Activity Content:</label>
+                    <textarea class="form-control" id="activity-content" name="content" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" >Create Activity</button>
+                </div>
             </form>
         </div>
-        </div>
-    </div>
     </div>
 
-
-    
-
-    
     <script>
-    var petid = <%= @petid %>;
-    var apiKey = "<%= @apiKey %>";
-    var activities;
-    var petData;
-    var BASE_URL = "<%= request.base_url %>";
-    $(document).ready(function() {
+        var petid = <%= @petid %>;
+        var apiKey = "<%= @apiKey %>";
+        var activities;
+        var petData;
+        var BASE_URL = "<%= request.base_url %>";
+        $(document).ready(function() {  
+            $("#createActivityModal .close-btn").click(function () {
+                $("#createActivityModal").modal('hide')
+            });
 
-        $.ajax({
-            url: BASE_URL+'/activities/pet/' + petid, // Example URL
-            method: 'GET',
-            dataType: 'json', // Expect JSON response
-            success: function(data) {
-                // Handle the JSON data here and render it on the page with Bootstrap styling
-                activities=data.map(activity => activity.content);
-                console.log(activities)
-                var html = '';
-                $.each(data, function(index, val) {
-                    html += '<div class="card"><div class="card-body">'
-
-                    for (var key in val) {
-                        if (val.hasOwnProperty(key)) {
-                            html += '<p class="card-text"><strong>' + key + ':</strong> ' + val[key] + '</p>';
-                        }
-                    } 
-                    // Add Delete button here
-                    html += '<button class="delete-activity btn btn-danger" data-id="' + val.id + '">Delete Activity</button>';
-                    html += '</div></div>';
-                });
-                
-                $('#my-container').html(html);
-            },
-            error: function() {
-                console.error('Error fetching data.');
-            }
-        });
-        $.ajax({
-                url: BASE_URL+'/pets/' + petid, // Example URL
+            $.ajax({
+                url: BASE_URL+'/activities/pet/' + petid, // Example URL
                 method: 'GET',
                 dataType: 'json', // Expect JSON response
                 success: function(data) {
-                    petData=data
                     // Handle the JSON data here and render it on the page with Bootstrap styling
-                    var html = '<div class="card"><div class="card-body">';
-                    for (var key in data) {
-                        if (data.hasOwnProperty(key)) {
-                            html += '<p class="card-text"><strong>' + key + ':</strong> ' + data[key] + '</p>';
-                        }
-                    }
-                    html += '</div></div>';
-                    $('#my-container2').html(html);
+                    activities=data.map(activity => activity.content);
+                    console.log(activities)
+                    var html = '';
+                    $.each(data, function(index, val) { 
+                        html += getActivityHTML(val);
+                    });
+                    
+                    $('#my-container').html(html);
                 },
                 error: function() {
                     console.error('Error fetching data.');
                 }
             });
-        $('#generateButton').click(function(e) {
-            // Prevent the default form submission
-            e.preventDefault();
-            $('#loadingMessage').show();
-            // Get the value from the input and store it in the variable
-            var preference=$('#myInput').val();
 
-            const apiUrl = 'https://api.openai.com/v1/chat/completions';
-
-            // Define consversation
-            const consversation = [
-                {"role": "system", "content": "You are an expert in providing pet owner guidance."},
-                {"role": "user", "content": `Based on my pet's pet_type and breed: ${{pettype:petData.pet_type,breed:petData.breed}}, and its recent activities: ${activities},give me some advises on how to better train it`},
-            ]
-            // Data to send in the request
-            const requestData = {
-                model: 'gpt-3.5-turbo',
-                messages: consversation,
-                temperature: 0.2
-            };
-
-            // Send the POST request to the OpenAI API
             $.ajax({
-                type: 'POST',
-                url: apiUrl,
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-                },
-                data: JSON.stringify(requestData),
+                url: BASE_URL+'/pets/' + petid, // Example URL
+                method: 'GET',
+                dataType: 'json', // Expect JSON response
                 success: function(data) {
-                    $('#loadingMessage').hide();
-                    
-                    const responseContent = data.choices[0].message.content;
-                    $('#my-container3').html(`<p>${responseContent}</p>`);
-                },
-                error: function(xhr, status, error) {
-                console.error('Error:', error);
-                }
-            });
-
-        });
-
-        $(document).on('click', '.delete-activity', function() {
-            if (!confirm('Are you sure you want to delete this activity?')) {
-                return; // Exit if the user clicked "Cancel"
-            }
-            
-            var activityId = $(this).data('id');
-            
-            $.ajax({
-                url: BASE_URL + '/activities/' + activityId,
-                method: 'DELETE',
-                dataType: 'json',
-                success: function(data) {
-                    alert('Activity deleted successfully.');
-                    // Refresh the activities listing
-                    $.ajax({
-                        url: BASE_URL + '/activities/pet/' + petid,
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(updatedData) {
-                            window.location.reload(); // Refresh the pets listing
-                        },
-                        error: function() {
-                            console.error('Error fetching updated data.');
-                        }
-                    });
+                    petData=data 
+                    $('#my-container2').html(getPetHTML(data));
                 },
                 error: function() {
-                    alert('Error deleting activity.');
+                    console.error('Error fetching data.');
                 }
             });
 
-        });
+            $('#generateButton').click(function(e) {
+                // Prevent the default form submission
+                e.preventDefault();
+                $('#loadingMessage').show();
+                // Get the value from the input and store it in the variable
+                var preference=$('#myInput').val();
 
-        $('#createActivityButton').click(function() {
-            $('#createActivityModal').modal('show');
-        });
+                const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-        // Handle the submission of the "Create Activity" form
-        $('#createActivityForm').submit(function(e) {
-            e.preventDefault();
-            var activityContent = $('#activity-content').val();
-            // Construct the activity data to be sent
-            var activityData = {
-                activity: {
-                    content: activityContent,
-                    pet_id: petid
-                }
-            };
-            
-            $.ajax({
-                url: BASE_URL + '/activities', 
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify(activityData),
-                success: function(data) {
-                    $('#createActivityModal').modal('hide');
-                    alert('Activity created successfully.');
-                    window.location.reload(); 
-                },
-                error: function(response) {
-                    alert('Error creating activity: ' + response.responseJSON.error);
-                }
+                // Define consversation
+                const consversation = [
+                    {"role": "system", "content": "You are an expert in providing pet owner guidance."},
+                    {"role": "user", "content": `Based on my pet's pet_type and breed: ${{pettype:petData.pet_type,breed:petData.breed}}, and its recent activities: ${activities},give me some advises on how to better train it`},
+                ]
+                // Data to send in the request
+                const requestData = {
+                    model: 'gpt-3.5-turbo',
+                    messages: consversation,
+                    temperature: 0.2
+                };
+
+                // Send the POST request to the OpenAI API
+                $.ajax({
+                    type: 'POST',
+                    url: apiUrl,
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                    },
+                    data: JSON.stringify(requestData),
+                    success: function(data) {
+                        $('#loadingMessage').hide();
+                        
+                        const responseContent = data.choices[0].message.content;
+                        $('#my-container3').html(`<p>${responseContent}</p>`);
+                    },
+                    error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    }
+                });
+
             });
+
+            $(document).on('click', '.delete-activity', function() {
+                if (!confirm('Are you sure you want to delete this activity?')) {
+                    return; // Exit if the user clicked "Cancel"
+                }
+                
+                var activityId = $(this).data('id');
+                
+                $.ajax({
+                    url: BASE_URL + '/activities/' + activityId,
+                    method: 'DELETE',
+                    dataType: 'json',
+                    success: function(data) {
+                        alert('Activity deleted successfully.');
+                        // Refresh the activities listing
+                        $.ajax({
+                            url: BASE_URL + '/activities/pet/' + petid,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(updatedData) {
+                                window.location.reload(); // Refresh the pets listing
+                            },
+                            error: function() {
+                                console.error('Error fetching updated data.');
+                            }
+                        });
+                    },
+                    error: function() {
+                        alert('Error deleting activity.');
+                    }
+                });
+            });
+
+            $('#createActivityButton').click(function() {
+                $('#createActivityModal').modal('show');
+            });
+
+            // Handle the submission of the "Create Activity" form
+            $('#createActivityForm').submit(function(e) {
+                e.preventDefault();
+                var activityContent = $('#activity-content').val();
+                // Construct the activity data to be sent
+                var activityData = {
+                    activity: {
+                        content: activityContent,
+                        pet_id: petid
+                    }
+                };
+                
+                $.ajax({
+                    url: BASE_URL + '/activities', 
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify(activityData),
+                    success: function(data) {
+                        $('#createActivityModal').modal('hide');
+                        alert('Activity created successfully.');
+                        window.location.reload(); 
+                    },
+                    error: function(response) {
+                        alert('Error creating activity: ' + response.responseJSON.error);
+                    }
+                });
+            });
+
+            function getPetHTML(val) {
+                var petTemplate = [
+                    ' <div class="my-pet">',
+                    '     <div class="col-lg-11 item row">',
+                    '         <div class="col-lg-2 col-sm-5">',
+                    '             <img src="/images/' + (val.pet_type.toLowerCase() == 'dog' ? 'dog' : (val.pet_type.toLowerCase() == 'cat' ? 'cat' : 'others')) + '.png" alt="">',
+                    '         </div>', 
+                    '         <div class="col-lg-10 col-sm-7 content">',
+                    '             <h4>name: ' + val.name + '</h4>',
+                    '             <span>onsale: ' + val.onsale + '</span>',
+                    '             <span>create_at: ' + val.created_at + '</span>', 
+                    '             <p>Meet ' + val.name + ', a furry bundle of joy and loyalty. With his soulful eyes and wagging tail, he has a way of melting hearts and bringing smiles to everyone he meets. This delightful ' + val.breed + ' possesses a charming blend of playfulness and calmness, making him the perfect companion for both spirited adventures and cozy nights in.</p>',
+                    '             <ul class="info">',
+                    '                 <li>pet_type: ' + val.pet_type + '</li>',
+                    '                 <li>breed: ' + val.breed + '</li>',
+                    '                 <li>birthdate: ' + val.birthdate + '</li>',
+                    '             </ul>',
+                    '         </div>',
+                    '     </div>',
+                    ' </div>',
+                ]
+                return petTemplate.join('');
+            }
+
+            function getActivityHTML(val) {
+                var petTemplate = [
+                    ' <div class="my-pet">',
+                    '     <div class="col-lg-11 item row">',
+                    '         <div class="col-lg-10 col-sm-7 content">',
+                    '             <h4>Activity: ' + val.content + '</h4>',
+                    '             <span>created_at: ' + val.created_at + '</span>',
+                    '             <span>updated_at: ' + val.updated_at + '</span>',
+                    '         </div>',
+                    '         <div class="col-lg-2 col-sm-5">',
+                    '             <img src="/images/activity.png" alt="" style="width:60px;height:60px">',
+                    '         </div>', 
+                    '     </div>',
+                    ' </div>',
+                ]
+                return petTemplate.join('');
+            }
         });
+    </script>
 
-    });
-</script>
+    <style>
+        textarea#activity-content {
+            resize: none; /* Disable textarea resize */
+            min-height: 100px; /* Set a minimum height */
+        }
+        .modal-footer button{
+            width: 80%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+    
+        .modal-footer  button:focus{
+            background-color: #ddd;
+        }
 
-<style>
-  .modal-header {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #dee2e6;
-  }
-  .modal-title {
-    color: #495057;
-  }
-  .modal-footer {
-    background-color: #f7f7f7;
-    border-top: 1px solid #dee2e6;
-  }
-  .close {
-    color: #000;
-    opacity: 1;
-  }
-  
-  .modal-dialog {
-    width: auto;
-    max-width: 500px; 
-  }
+        .modal-footer  button {
+            border-radius: 6px;
+            height: 44px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 0 30px;
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            border: none; 
+            background-color: #CBC3E3;
+            color: #341535;
+        }
 
-  .modal-content {
-    width: 100%;
-    border-radius: 0.3rem;
-  }
-  .modal-dialog-centered {
-    display: flex;
-    align-items: center;
-  }
-  .modal-body {
-    position: relative;
-    padding: 20px;
-  }
-  .form-control {
-    border-radius: 0.25rem;
-  }
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-  }
-  .btn {
-    border-radius: 0.25rem;
-  }
-  textarea#activity-content {
-    resize: none; /* Disable textarea resize */
-    min-height: 100px; /* Set a minimum height */
-  }
-</style>
+        .modal-footer  button:hover {
+            color: #CBC3E3;
+            background-color: #341535;
+            box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 3px solid #b98eff;
+            border-radius: 10px;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: linear-gradient(to left, rgba(185, 142, 255, 0.8), rgba(225, 197, 255, 0.8));
+            color: #333;
+            border-color: #e1c5ff;
+        }
+
+        #loadingMessage {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px; /* Adjust the margin as needed */
+        }
+
+        .container #responseContainer #questions, #answers {
+            background-color: #f0f0f0; /* Light gray background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            color: #333; /* Dark text color */
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 50px;
+        } 
+
+        .container #my-container3 {
+            background-color: #f0f0f0; /* Light gray background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            color: #333; /* Dark text color */
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 50px;
+        }
+    </style>
 
 </body>
 </html>
