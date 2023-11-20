@@ -3,130 +3,183 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<form id="myForm">
-    <label for="myInput">Let us know more about you! We will find some pet that match you.</label>
-    <input type="text" id="myInput" name="myInput" required>
-    <button type="submit">Submit</button>
-</form>
-<div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
-<div id="my-container2"></div>
-<div id="my-container"></div>
 
+<body>
+    <div class="market container-fluid">
+        <form id="myForm">
+            <label for="myInput">Let us know more about you! We will find some pet that match you.</label>
+            <input type="text" id="myInput" name="myInput" required>
+            <button type="submit">Submit</button>
+        </form>
 
-<script>
-var BASE_URL = "<%= request.base_url %>";
-var apiKey = "<%= @apiKey %>";
-var category;
-$(document).ready(function() {
-    if (!localStorage.getItem('username')) {
-        window.location.href = '/';
-    }
-    $.ajax({
-    url: BASE_URL+'/onsale', // Example URL
-    method: 'GET',
-    dataType: 'json', // Expect JSON response
-    success: function(data) {
-        // Handle the JSON data here and render it on the page
-        category = data.map(pet => ({
-            breed: pet.breed,
-            pet_type: pet.pet_type
-        }));
-        function renderTable(data) {
-            var $table = $('<table>').addClass('table table-striped');
-            var $thead = $('<thead>').append(`
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Birthdate</th>
-                    <th>Breed</th>
-                    <th>Price</th>
-                    <th>Owner</th>
-                    <th>Email</th>
-                    <th>Contact</th>
-                </tr>
-            `);
-            var $tbody = $('<tbody>');
+        <div id="loadingMessage" style="display: none;">Waiting for data, please be patient...</div>
+        <div id="my-container2"></div>
+        <div id="my-container"></div>
+    </div>
 
-            data.forEach(function(pet) {
-                var ownerEmail = pet.owner_email ? pet.owner_email : "No Email";
-                var $row = $(`
+    <script>
+    var BASE_URL = "<%= request.base_url %>";
+    var apiKey = "<%= @apiKey %>";
+    var category;
+    $(document).ready(function() {
+        if (!localStorage.getItem('username')) {
+            window.location.href = '/';
+        }
+        $.ajax({
+        url: BASE_URL+'/onsale', // Example URL
+        method: 'GET',
+        dataType: 'json', // Expect JSON response
+        success: function(data) {
+            // Handle the JSON data here and render it on the page
+            category = data.map(pet => ({
+                breed: pet.breed,
+                pet_type: pet.pet_type
+            }));
+            function renderTable(data) {
+                var $table = $('<table>').addClass('table table-striped');
+                var $thead = $('<thead>').append(`
                     <tr>
-                        <td>${pet.name}</td>
-                        <td>${pet.pet_type}</td>
-                        <td>${pet.birthdate}</td>
-                        <td>${pet.breed}</td>
-                        <td>$${pet.price}</td>
-                        <td>${pet.owner_name}</td>
-                        <td>${ownerEmail}</td>
-                        <td><button class="contact-btn" data-email="${ownerEmail}">Contact</button></td>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Birthdate</th>
+                        <th>Breed</th>
+                        <th>Price</th>
+                        <th>Owner</th>
+                        <th>Email</th>
+                        <th>Contact</th>
                     </tr>
                 `);
-                $tbody.append($row);
-            });
+                var $tbody = $('<tbody>');
 
-            $table.append($thead).append($tbody);
-            $('#my-container').html($table);
+                data.forEach(function(pet) {
+                    var ownerEmail = pet.owner_email ? pet.owner_email : "No Email";
+                    var $row = $(`
+                        <tr>
+                            <td>${pet.name}</td>
+                            <td>${pet.pet_type}</td>
+                            <td>${pet.birthdate}</td>
+                            <td>${pet.breed}</td>
+                            <td>$${pet.price}</td>
+                            <td>${pet.owner_name}</td>
+                            <td>${ownerEmail}</td>
+                            <td><button class="contact-btn" data-email="${ownerEmail}">Contact</button></td>
+                        </tr>
+                    `);
+                    $tbody.append($row);
+                });
+
+                $table.append($thead).append($tbody);
+                $('#my-container').html($table);
+            }
+
+            $('#my-container').html(renderTable(data));
+        },
+        error: function() {
+            console.error('Error fetching data.');
         }
+        });
 
-        $('#my-container').html(renderTable(data));
-    },
-    error: function() {
-        console.error('Error fetching data.');
-    }
-    });
-
-    $(document).on('click', '.contact-btn', function() {
-        var email = $(this).data('email');
-        console.log(email);
-        if (email !== "No Email") {
-            // Open email client
-            window.location.href = `mailto:${email}`;
-        } else {
-            alert('Email not available for this entry.');
-        }
-    });
-
-    $('#myForm').on('submit', function(e) {
-        // Prevent the default form submission
-        e.preventDefault();
-        $('#loadingMessage').show();
-        // Get the value from the input and store it in the variable
-        var preference=$('#myInput').val();
-
-        const apiUrl = 'https://api.openai.com/v1/chat/completions';
-
-        // Define consversation
-        const consversation = [
-            {"role": "system", "content": "Your are an experience pet advisor. Do not choose an entry that is not in the json provided"},
-            {"role": "user", "content": `Based on my preference: ${preference}, Choose 1 entries(with pet_type and breed) from: ${JSON.stringify(category)} that best suit me and give me the corresponding reason`},
-        ]
-        // Data to send in the request
-        const requestData = {
-            model: 'gpt-3.5-turbo',
-            messages: consversation,
-            temperature: 0.2
-        };
-
-        // Send the POST request to the OpenAI API
-        $.ajax({
-            type: 'POST',
-            url: apiUrl,
-            headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-            },
-            data: JSON.stringify(requestData),
-            success: function(data) {
-                $('#loadingMessage').hide();
-                
-                const responseContent = data.choices[0].message.content;
-                $('#my-container2').html(`<p>${responseContent}</p>`);
-            },
-            error: function(xhr, status, error) {
-            console.error('Error:', error);
+        $(document).on('click', '.contact-btn', function() {
+            var email = $(this).data('email');
+            console.log(email);
+            if (email !== "No Email") {
+                // Open email client
+                window.location.href = `mailto:${email}`;
+            } else {
+                alert('Email not available for this entry.');
             }
         });
 
+        $('#myForm').on('submit', function(e) {
+            // Prevent the default form submission
+            e.preventDefault();
+            $('#loadingMessage').show();
+            // Get the value from the input and store it in the variable
+            var preference=$('#myInput').val();
+
+            const apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+            // Define consversation
+            const consversation = [
+                {"role": "system", "content": "Your are an experience pet advisor. Do not choose an entry that is not in the json provided"},
+                {"role": "user", "content": `Based on my preference: ${preference}, Choose 1 entries(with pet_type and breed) from: ${JSON.stringify(category)} that best suit me and give me the corresponding reason`},
+            ]
+            // Data to send in the request
+            const requestData = {
+                model: 'gpt-3.5-turbo',
+                messages: consversation,
+                temperature: 0.2
+            };
+
+            // Send the POST request to the OpenAI API
+            $.ajax({
+                type: 'POST',
+                url: apiUrl,
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+                },
+                data: JSON.stringify(requestData),
+                success: function(data) {
+                    $('#loadingMessage').hide();
+                    
+                    const responseContent = data.choices[0].message.content;
+                    $('#my-container2').html(`<p>${responseContent}</p>`);
+                },
+                error: function(xhr, status, error) {
+                console.error('Error:', error);
+                }
+            });
+
+        });
     });
-});
-  </script>
+    </script>
+
+    <style>
+        .market {
+            margin: 20px;
+            margin-bottom: 200px;
+        }
+
+        input {
+            width: 30%;
+            padding: 10px;
+            margin: 20px 50px 50px 50px;
+            border: none;
+            background: #f1f1f1;
+        }
+        
+        button:focus{
+            background-color: #ddd;
+        }
+        
+        button {
+            border-radius: 6px;
+            height: 44px;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 0 30px;
+            margin-right: auto;
+            margin-left: auto;
+            letter-spacing: 1px;
+            text-align: center;
+            border: none; 
+            background-color: #CBC3E3;
+            color: #341535;
+        }
+        
+        button:hover {
+            color: #CBC3E3;
+            background-color: #341535;
+            box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+        }
+
+        #loadingMessage {
+            display: inline-block;
+            vertical-align: right;
+            margin-left: 10px; /* Adjust the margin as needed */
+            margin-bottom: 30px;
+        }
+    </style>
+    
+</body>
