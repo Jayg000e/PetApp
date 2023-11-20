@@ -6,26 +6,27 @@
 </head>
 <body>
 
-<h1>Create a New Pet</h1>
+<div class="container mt-4" style="width:50%">
+  <h1>Create a New Pet</h1>
+  <form id="create_pet_form">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    
+    <label for="pet_type">Pet Type:</label><br>
+    <input type="text" id="pet_type" name="pet_type"><br>
+    
+    <label for="birthdate">Birthdate:</label><br>
+    <input type="date" id="birthdate" name="birthdate"><br>
+    
+    <label for="breed">Breed:</label><br>
+    <input type="text" id="breed" name="breed"><br>
 
-<form id="create_pet_form">
-  <label for="name">Name:</label><br>
-  <input type="text" id="name" name="name"><br>
-  
-  <label for="pet_type">Pet Type:</label><br>
-  <input type="text" id="pet_type" name="pet_type"><br>
-  
-  <label for="birthdate">Birthdate:</label><br>
-  <input type="date" id="birthdate" name="birthdate"><br>
-  
-  <label for="breed">Breed:</label><br>
-  <input type="text" id="breed" name="breed"><br>
-
-  <label for="description">Description:</label><br>
-  <input type="text" id="description" name="description"><br>
-  
-  <button type="button" onclick="createPet()">Create Pet</button>
-</form>
+    <label for="description">Description:</label><br>
+    <input type="text" id="description" name="description"><br>
+    
+    <button type="button" onclick="createPet()">Create Pet</button>
+  </form>
+</div>
 
 <script>
   var BASE_URL = "<%= request.base_url %>";
@@ -56,6 +57,52 @@ function createPet() {
   });
 }
 </script>
+
+<style>
+  h1 {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid silver;
+    color: #A9A9A9;
+  }
+
+  input {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  button:focus{
+    background-color: #ddd;
+  }
+
+  button {
+    border-radius: 6px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 0 30px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    border: none; 
+    background-color: #CBC3E3;
+    color: #341535;
+  }
+
+  button:hover {
+    color: #CBC3E3;
+    background-color: #341535;
+    box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+  }
+</style>
 
 </body>
 
