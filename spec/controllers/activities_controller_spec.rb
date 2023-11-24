@@ -58,11 +58,24 @@ RSpec.describe ActivitiesController, type: :controller do
         let(:invalid_params) { attributes_for(:activity, name: nil) } # Generates invalid pet attributes
 
         it 'does not create an activity and returns an error' do
-            expect {
-                post :create, params: { activity: invalid_params }
-            }.not_to change(Activity, :count)
-            expect(response).to have_http_status(:unprocessable_entity)
-            end
+          expect {
+            post :create, params: { activity: invalid_params }
+          }.not_to change(Activity, :count)
+          expect(response).to have_http_status(:unprocessable_entity)
         end
     end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:activity) { create(:activity) }
+
+    it 'destroys the activity' do
+      expect {
+        delete :destroy, params: { id: activity.id }
+      }.to change(Activity, :count).by(-1)
+
+      expect(response).to have_http_status(:no_content)
+    end
+  end
+
 end

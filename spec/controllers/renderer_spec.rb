@@ -22,7 +22,7 @@ RSpec.describe "Renderers", type: :request do
     end
   end
 
-  describe 'Renderer Routing', type: :routing do
+  describe 'Renderer Routing Pet', type: :routing do
     it 'routes GET /render/users/pet to renderer#createPet' do
       expect(get: '/render/users/pet').to route_to('renderer#createPet')
     end
@@ -42,6 +42,13 @@ RSpec.describe "Renderers", type: :request do
     end
   end
 
+  describe 'GET #createUser' do
+    it 'renders the createUser template' do
+      get "/render/users"
+      expect(response).to render_template('createUser')
+    end
+  end
+
   describe 'GET #createPet' do
     it 'renders the createPet view' do
       get '/render/users/pet' 
@@ -56,6 +63,13 @@ RSpec.describe "Renderers", type: :request do
       expect(response).to render_template('market')
       expect(assigns(:apiKey)).to eq(Rails.application.credentials[:api_key])
       expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe '#home' do
+    it 'renders the home template' do
+      get '/'
+      expect(response).to render_template('home')
     end
   end
 end
