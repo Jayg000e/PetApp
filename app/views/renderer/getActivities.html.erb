@@ -51,6 +51,11 @@
                 $("#createActivityModal").modal('hide')
             });
 
+            $('#createActivityButton').click(function() {
+                $('#createActivityModal').modal('show');
+            });
+
+
             $.ajax({
                 url: BASE_URL+'/activities/pet/' + petid, // Example URL
                 method: 'GET',
@@ -159,10 +164,7 @@
                 });
             });
 
-            $('#createActivityButton').click(function() {
-                $('#createActivityModal').modal('show');
-            });
-
+            
             // Handle the submission of the "Create Activity" form
             $('#createActivityForm').submit(function(e) {
                 e.preventDefault();

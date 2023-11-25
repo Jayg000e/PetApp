@@ -333,31 +333,31 @@
   },
   "RSpec": {
     "coverage": {
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/activities_helper.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/helpers/activities_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/application_helper.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/pets_helper.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/helpers/pets_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/helpers/renderer_helper.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/helpers/renderer_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/activities_controller.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/controllers/activities_controller.rb": {
         "lines": [
           1,
           1,
@@ -411,13 +411,13 @@
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/application_controller.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/pets_controller.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/controllers/pets_controller.rb": {
         "lines": [
           1,
           1,
@@ -514,7 +514,7 @@
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/users_controller.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/controllers/users_controller.rb": {
         "lines": [
           1,
           1,
@@ -628,7 +628,7 @@
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/activity.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/models/activity.rb": {
         "lines": [
           1,
           1,
@@ -637,14 +637,14 @@
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/application_record.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/pet.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/models/pet.rb": {
         "lines": [
           1,
           1,
@@ -654,7 +654,7 @@
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/models/user.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -665,7 +665,7 @@
           null
         ]
       },
-      "/Users/yuhsinhuang/Documents/Columbia/Coursework/COMS4152_ESaaS/PetApp/app/controllers/renderer_controller.rb": {
+      "/home/jayg/Desktop/huawei/PetApp/app/controllers/renderer_controller.rb": {
         "lines": [
           1,
           1,
@@ -713,6 +713,6 @@
         ]
       }
     },
-    "timestamp": 1700870181
+    "timestamp": 1700872087
   }
 }
