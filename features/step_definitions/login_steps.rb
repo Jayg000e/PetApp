@@ -38,4 +38,5 @@ Given('I have login') do
   within('#loginForm') do
     find('input[type="submit"]').click
   end
+  sleep(1)
 end
