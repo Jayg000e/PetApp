@@ -10,8 +10,8 @@ require 'cucumber/rails'
 
 
 
-Capybara.default_driver = :selenium_chrome_headless
-Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.default_driver = :selenium_chrome
+Capybara.javascript_driver = :selenium_chrome
 
 
 # frozen_string_literal: true

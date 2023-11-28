@@ -1,5 +1,5 @@
-Given("I am on the createActivity page for pet {int}") do |petid|
-    visit "/render/pets/#{petid}/activity"
+Given("I am on the getActivity page for pet {int}") do |petid|
+    visit "/render/pets/#{petid}/activities"
   end
 
 

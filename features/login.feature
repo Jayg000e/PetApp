@@ -15,5 +15,4 @@ Feature: Login functionality
     When I click on the login link
     And I fill in the login form with invalid credentials
     And I click the submit button
-    And pending
     Then I should see an error message
