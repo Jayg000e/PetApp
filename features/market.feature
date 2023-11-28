@@ -2,8 +2,8 @@ Feature: Pet purchasing suggestion by GPT
 
     Scenario: User go to the market and get suggestion on the best match pet by GPT
     Given there are users with the following details:
-      | Username  | Password  | Role |
-      | user1     | password1 |      |
+      | Username  | Password  | Role | Email             |
+      | user1     | password1 |      | user1@example.com |
     Given I have login
     Given there are pets onsale with the following details:
         | Name      | Pet Type | Birthdate  | Breed            |    onSale | Price |

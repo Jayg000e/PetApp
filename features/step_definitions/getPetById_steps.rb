@@ -47,7 +47,8 @@ Given("there are users with the following details:") do |table|
     User.create!(
       username: user['Username'],
       password: user['Password'],
-      role: user['Role']
+      role: user['Role'], 
+      email: user['Email']
     )
   end
 end
