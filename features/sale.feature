@@ -14,4 +14,6 @@ Feature: on sale and off sale
         And I fill in "sale_price" with "500"
         And I click on "Update Price"
         Then I should see an alert with text "Pet put on sale at price: 500"
+        When I click on "Go Off Sale"
+        Then I should see an alert with text "Pet taken off sale."
         

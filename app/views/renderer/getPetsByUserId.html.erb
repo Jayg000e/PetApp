@@ -105,11 +105,13 @@
         $(document).on('click', '.toggle-sale', function() {
             var petId = $(this).data('id');
             var onsale = $(this).data('onsale');
-            
+
             // Toggle the form visibility
             var $form = $(this).siblings('.sale-form');
-            if(onsale && !$form.is(':visible')){
-                $form.slideDown();
+            if(onsale){
+                if (!$form.is(':visible')){
+                    $form.slideDown();
+                }
             } else {
                 // Proceed with going off sale
                 $.ajax({
@@ -117,8 +119,8 @@
                     method: 'PATCH',
                     dataType: 'json',
                     success: function(data) {
-                        // alert('Pet taken off sale.');
                         window.location.href = '/render/users/pets'; // Refresh the pets listing
+                        alert('Pet taken off sale.');
                     },
                     error: function() {
                         alert('Error updating pet status.');
@@ -140,8 +142,8 @@
                 dataType: 'json',
                 data: { price: salePrice },
                 success: function(data) {
-                    alert('Pet put on sale at price: ' + salePrice);
                     window.location.href = '/render/users/pets'; // Refresh the pets listing
+                     alert('Pet put on sale at price: ' + salePrice);
                 },
                 error: function() {
                     alert('Error setting sale price.');
