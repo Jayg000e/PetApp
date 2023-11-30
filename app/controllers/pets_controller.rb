@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create,:put_offsale,:put_onsale]
+  skip_before_action :verify_authenticity_token, only: [:create,:put_offsale,:put_onsale,:destroy]
 
   def index
     @pets = Pet.all

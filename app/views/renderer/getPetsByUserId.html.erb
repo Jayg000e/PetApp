@@ -152,10 +152,6 @@
         });
 
         $(document).on('click', '.delete-pet', function() {
-            if (!confirm('Are you sure you want to delete this pet?')) {
-                return; // Exit if the user clicked "Cancel"
-            }
-            
             var petId = $(this).data('id');
             
             $.ajax({
@@ -163,7 +159,6 @@
                 method: 'DELETE',
                 dataType: 'json',
                 success: function(data) {
-                    alert('Pet deleted successfully.');
                     window.location.href = '/render/users/pets'; // Refresh the pets listing
                 },
                 error: function() {

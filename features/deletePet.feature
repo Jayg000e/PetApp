@@ -12,7 +12,6 @@ Feature: delete a pet
         Given I have login
         Given I am on the My Pet page
         When I click on the first "Delete Pet" button
-        When I accept the alert 
-        Then I should see an alert with text "Pet deleted successfully."
+        Then I should not see "Fido"
         
         
