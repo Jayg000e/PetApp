@@ -16,6 +16,7 @@ end
 
 
 Given("I go to the market page") do
+  sleep(1)
   visit('/render/market')
 end
 
@@ -33,4 +34,8 @@ Given("there are pets onsale with the following details:") do |table|
       user: User.find_by(username: 'user1')
     )
   end
+end
+
+Then("I should not see {string}") do |text|
+  expect(page).not_to have_content(text)
 end
