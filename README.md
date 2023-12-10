@@ -2,7 +2,7 @@
 
 **Team Members:**
 
-Contribution History: [Link](https://github.com/Jayg000e/PetApp/graphs/contributors?from=2023-09-17&to=2023-11-04&type=c)
+Contribution History: [Link](https://github.com/Jayg000e/PetApp/graphs/contributors)
 
 - Yunjia Wang   (yw4105)
 - Jia Guo       (jg4692)
