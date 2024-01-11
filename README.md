@@ -60,7 +60,7 @@ You can find coverage reports under the `coverage` folder.
 
 ## Heroku Link
 
-For the deployed version of our application, visit our Heroku link at: https://agile-river-99147-09b2028b3c1f.herokuapp.com
+For the deployed version of our application, visit our Heroku link at: https://agile-river-99147-09b2028b3c1f.herokuapp.com (No longer available)
 
 ## Interacting with the UI
 
